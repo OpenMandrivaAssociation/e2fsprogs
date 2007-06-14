@@ -5,7 +5,7 @@
 
 Name: e2fsprogs
 Version: 1.39
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -15,6 +15,7 @@ Patch4: e2fsprogs-1.36-autoconf.patch
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.39-handle-last-check-in-the-future.patch
+Patch9: e2fsprogs-1.39-fix-memleak.patch
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%_tmppath/%name-root
@@ -80,6 +81,7 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
+%patch9 -p1 -b .mem-leak
 rm -f configure
 autoconf
 
