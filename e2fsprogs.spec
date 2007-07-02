@@ -4,18 +4,17 @@
 %define libname %mklibname ext2fs 2
 
 Name: e2fsprogs
-Version: 1.39
-Release: %mkrel 5
+Version: 1.40
+Release: %mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
-Source:	%url/%name-%version.tar.bz2
+Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Patch4: e2fsprogs-1.36-autoconf.patch
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.39-handle-last-check-in-the-future.patch
-Patch9: e2fsprogs-1.39-fix-memleak.patch
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%_tmppath/%name-root
@@ -81,7 +80,6 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
-%patch9 -p1 -b .mem-leak
 rm -f configure
 autoconf
 
