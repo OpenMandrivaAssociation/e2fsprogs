@@ -176,30 +176,30 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man1/lsattr.1*
 %_mandir/man1/uuidgen.1*
 %_mandir/man3/uuid*
-%_mandir/man5/e2fsck.conf.5.bz2
-%_mandir/man5/mke2fs.conf.5.bz2
+%_mandir/man5/e2fsck.conf.5*
+%_mandir/man5/mke2fs.conf.5*
 %_mandir/man8/badblocks.8*
 %_mandir/man8/debugfs.8*
 %_mandir/man8/dumpe2fs.8*
 %_mandir/man8/e2fsck.8*
-%_mandir/man8/e2image.8.bz2
+%_mandir/man8/e2image.8*
 %_mandir/man8/e2label.8*
 %_mandir/man8/filefrag.8*
-%_mandir/man8/findfs.8.bz2
+%_mandir/man8/findfs.8*
 %_mandir/man8/fsck.8*
-%_mandir/man8/fsck.ext2.8.bz2
-%_mandir/man8/fsck.ext3.8.bz2
+%_mandir/man8/fsck.ext2.8*
+%_mandir/man8/fsck.ext3.8*
 %_mandir/man8/mke2fs.8*
-%_mandir/man8/mkfs.ext2.8.bz2
-%_mandir/man8/mkfs.ext3.8.bz2
+%_mandir/man8/mkfs.ext2.8*
+%_mandir/man8/mkfs.ext3.8*
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
 
 %_root_sbindir/blkid
-%_mandir/man8/blkid.8.bz2
+%_mandir/man8/blkid.8*
 %_root_sbindir/logsave
-%_mandir/man8/logsave.8.bz2
+%_mandir/man8/logsave.8*
 
 
 %files -n %libname
@@ -212,7 +212,7 @@ rm -rf $RPM_BUILD_ROOT
 %_root_libdir/libuuid.so.*
 
 %_root_libdir/libblkid.so.*
-%_mandir/man3/libblkid.3.bz2
+%_mandir/man3/libblkid.3*
 %_libdir/e2initrd_helper
 
 %files -n %libname-devel
@@ -221,7 +221,7 @@ rm -rf $RPM_BUILD_ROOT
 %_bindir/compile_et
 %_mandir/man1/compile_et.1*
 %_bindir/mk_cmds
-%_mandir/man1/mk_cmds.1.bz2
+%_mandir/man1/mk_cmds.1*
 %_libdir/pkgconfig/*
 
 %_libdir/libblkid.so
