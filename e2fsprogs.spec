@@ -4,8 +4,8 @@
 %define libname %mklibname ext2fs 2
 
 Name: e2fsprogs
-Version: 1.40
-Release: %mkrel 3
+Version: 1.40.2
+Release: %mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
