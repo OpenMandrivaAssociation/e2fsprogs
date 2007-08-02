@@ -14,7 +14,7 @@ Patch4: e2fsprogs-1.36-autoconf.patch
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
-Patch8: e2fsprogs-1.39-handle-last-check-in-the-future.patch
+Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%_tmppath/%name-root
