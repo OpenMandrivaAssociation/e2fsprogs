@@ -5,7 +5,7 @@
 
 Name: e2fsprogs
 Version: 1.40.2
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -212,7 +212,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_libdir/libuuid.so.*
 
 %_root_libdir/libblkid.so.*
-%_mandir/man3/libblkid.3*
 %_libdir/e2initrd_helper
 
 %files -n %libname-devel
@@ -220,6 +219,7 @@ rm -rf $RPM_BUILD_ROOT
 %_infodir/libext2fs.info*
 %_bindir/compile_et
 %_mandir/man1/compile_et.1*
+%_mandir/man3/libblkid.3*
 %_bindir/mk_cmds
 %_mandir/man1/mk_cmds.1*
 %_libdir/pkgconfig/*
