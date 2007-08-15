@@ -2,6 +2,7 @@
 %define	_root_sbindir	/sbin
 %define	_root_libdir	/%_lib
 %define libname %mklibname ext2fs 2
+%define	devname	%mklibname ext2fs -d
 
 Name: e2fsprogs
 Version: 1.40.2
@@ -15,6 +16,16 @@ Patch4: e2fsprogs-1.36-autoconf.patch
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
+#rh patches
+Patch30: e2fsprogs-1.38-resize-inode.patch
+Patch32: e2fsprogs-1.38-no_pottcdate.patch
+Patch34: e2fsprogs-1.39-blkid-devmapper.patch
+Patch36: e2fsprogs-1.38-etcblkid.patch
+Patch39: e2fsprogs-1.39-multilib.patch
+Patch62: e2fsprogs-1.39-mkinstalldirs.patch
+Patch63: e2fsprogs-1.40.2-warning-fixes.patch
+Patch64: e2fsprogs-1.40.2-swapfs.patch
+
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%_tmppath/%name-root
@@ -80,6 +91,23 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
+# enable tune2fs to set and clear the resize inode (#167816)
+%patch30 -p1 -b .resize-inode
+# drop timestamp from mo files (#168815/168814/245653)
+%patch32 -p1 -b .pottcdate
+# look at device mapper devices
+%patch34 -p1 -b .dm
+# put blkid.tab in /etc/blkid/
+%patch36 -p1 -b .etcblkid
+# Fix multilib conflicts (#192665)
+%patch39 -p1 -b .multilib
+# Fix for newer autoconf (#220715)
+%patch62 -p1 -b .mkinstalldirs
+# Fix type warning in badblocks
+%patch63 -p1 -b .warnings
+# Fix ext2fs_swap_inode_full() on bigendian boxes
+%patch64 -p1 -b .swapfs
+
 rm -f configure
 autoconf
 
@@ -129,7 +157,7 @@ rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ext2fs/ext2_types.h
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/blkid/blkid_types.h
 
-%find_lang %name
+%find_lang %{name}
 
 chmod +x $RPM_BUILD_ROOT/%_bindir/{mk_cmds,compile_et}
 
@@ -142,7 +170,7 @@ rm -rf $RPM_BUILD_ROOT
 %post -n %libname-devel
 %_install_info libext2fs.info
 
-%postun -n %libname-devel
+%preun -n %libname-devel
 %_remove_install_info libext2fs.info
 
 
