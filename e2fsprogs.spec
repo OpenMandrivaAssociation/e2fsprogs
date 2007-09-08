@@ -3,10 +3,11 @@
 %define	_root_libdir	/%_lib
 %define libname %mklibname ext2fs 2
 %define	devname	%mklibname ext2fs -d
+%define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
 Version: 1.40.2
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -28,7 +29,7 @@ Patch64: e2fsprogs-1.40.2-swapfs.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
-Buildroot:	%_tmppath/%name-root
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
 
 %description
@@ -49,7 +50,7 @@ performance of an ext2 filesystem.
 %package -n %libname
 Summary: The libraries for Ext2fs
 Group: System/Libraries
-Requires: e2fsprogs
+Requires: e2fsprogs = %{version}-%{release}
 
 %description -n %libname
 The e2fsprogs package contains a number of utilities for creating,
@@ -64,14 +65,18 @@ filesystem utilities.
 
 You should install %libname to use tools who use ext2fs features.
 
-%package -n %libname-devel
+%package -n %{devname}
 Summary: The libraries for Ext2fs
 Group: Development/C
-Requires:  %libname = %version
-Obsoletes: %{name}-devel
-Provides:  %{name}-devel, libext2fs-devel, libe2fsprogs-devel
+Requires:  %{libname} = %{version}-%{release}
+Obsoletes: %{name}-devel < %{version}-%{release}
+Obsoletes: %{devnameold} < %{version}-%{release}
+Provides:  %{name}-devel = %{version}-%{release}
+Provides:  libext2fs-devel = %{version}-%{release}
+Provides:  libe2fsprogs-devel = %{version}-%{release}
+Provides:  ext2fs-devel = %{version}-%{release}
 
-%description -n %libname-devel
+%description -n %{devname}
 The e2fsprogs package contains a number of utilities for creating,
 checking, modifying and correcting any inconsistencies in second
 extended (ext2) filesystems.  E2fsprogs contains e2fsck (used to repair
@@ -167,10 +172,10 @@ rm -rf $RPM_BUILD_ROOT
 %post -n %libname -p /sbin/ldconfig
 %postun -n %libname -p /sbin/ldconfig
 
-%post -n %libname-devel
+%post -n %{devname}
 %_install_info libext2fs.info
 
-%preun -n %libname-devel
+%preun -n %{devname}
 %_remove_install_info libext2fs.info
 
 
@@ -194,8 +199,8 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/mkfs.ext3
 %_sbindir/filefrag
 %_sbindir/mklost+found
+# FIXME: why isn't this marked %config(noreplace)?
 %_sysconfdir/mke2fs.conf
-
 
 %_bindir/chattr
 %_bindir/lsattr
@@ -242,7 +247,7 @@ rm -rf $RPM_BUILD_ROOT
 %_root_libdir/libblkid.so.*
 %_libdir/e2initrd_helper
 
-%files -n %libname-devel
+%files -n %{devname}
 %defattr(-,root,root,755)
 %_infodir/libext2fs.info*
 %_bindir/compile_et
@@ -279,5 +284,3 @@ rm -rf $RPM_BUILD_ROOT
 %multiarch %dir %multiarch_includedir/blkid
 %multiarch %multiarch_includedir/blkid/blkid_types.h
 %_libdir/libblkid.a
-
-
