@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.2
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -70,7 +70,7 @@ Summary: The libraries for Ext2fs
 Group: Development/C
 Requires:  %{libname} = %{version}-%{release}
 Obsoletes: %{name}-devel < %{version}-%{release}
-Obsoletes: %{devnameold} < %{version}-%{release}
+Obsoletes: %{devnameold}
 Provides:  %{name}-devel = %{version}-%{release}
 Provides:  libext2fs-devel = %{version}-%{release}
 Provides:  libe2fsprogs-devel = %{version}-%{release}
