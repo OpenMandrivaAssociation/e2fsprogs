@@ -132,9 +132,6 @@ autoconf
 chmod 644 po/*.po
 
 %build
-OPT_FLAGS=`echo $RPM_OPT_FLAGS | sed -e "s/-fomit-frame-pointer//g"`
-# (gb) 1.23-3mdk: e2fsck may work will full optimizations but without strict-aliasing
-CFLAGS="$OPT_FLAGS -fno-omit-frame-pointer -O1 -fno-strict-aliasing"
 %configure2_5x --enable-elf-shlibs
 make libs progs docs
 # use e2fsck shared instead, avoid patch.
@@ -155,7 +152,7 @@ LC_ALL=C make check || :
 rm -rf $RPM_BUILD_ROOT
 export PATH=/sbin:$PATH
 
-make install install-libs DESTDIR="$RPM_BUILD_ROOT" \
+%makeinstall_std install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
 for i in libblkid.so.1 libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2 libuuid.so.1; do
@@ -176,7 +173,7 @@ rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
 
 %find_lang %{name}
 
-chmod +x $RPM_BUILD_ROOT/%_bindir/{mk_cmds,compile_et}
+chmod +x $RPM_BUILD_ROOT%_bindir/{mk_cmds,compile_et}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
