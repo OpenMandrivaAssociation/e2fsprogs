@@ -25,7 +25,6 @@ Patch36: e2fsprogs-1.38-etcblkid.patch
 Patch39: e2fsprogs-1.39-multilib.patch
 Patch62: e2fsprogs-1.39-mkinstalldirs.patch
 Patch63: e2fsprogs-1.40.2-warning-fixes.patch
-Patch64: e2fsprogs-1.40.2-swapfs.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -110,8 +109,6 @@ features.
 %patch62 -p1 -b .mkinstalldirs
 # Fix type warning in badblocks
 %patch63 -p1 -b .warnings
-# Fix ext2fs_swap_inode_full() on bigendian boxes
-%patch64 -p1 -b .swapfs
 
 rm -f configure
 autoconf
