@@ -123,6 +123,8 @@ make libs progs docs
 cp -af e2fsck/e2fsck.shared e2fsck/e2fsck
 
 %check
+# (tv) make lib/ss test pass:
+export PATH=$PATH:. 
 # FIXME: all tests must pass
 # r_move_itable: resize2fs with resize_inode: failed
 # r_resize_inode: resize2fs with resize_inode: failed
