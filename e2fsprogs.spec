@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.3
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -25,6 +25,8 @@ Patch36: e2fsprogs-1.38-etcblkid.patch
 Patch39: e2fsprogs-1.39-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 Patch63: e2fsprogs-1.40.2-warning-fixes.patch
+
+Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -109,6 +111,9 @@ features.
 %patch62 -p1 -b .mkinstalldirs
 # Fix type warning in badblocks
 %patch63 -p1 -b .warnings
+
+# protect ->open ops from glibc open-create-mode-checker
+%patch66 -p1 -b .open
 
 rm -f configure
 autoconf
