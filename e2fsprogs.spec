@@ -23,7 +23,7 @@ Patch32: e2fsprogs-1.38-no_pottcdate.patch
 Patch34: e2fsprogs-1.39-blkid-devmapper.patch
 Patch36: e2fsprogs-1.38-etcblkid.patch
 Patch39: e2fsprogs-1.39-multilib.patch
-Patch62: e2fsprogs-1.39-mkinstalldirs.patch
+Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 Patch63: e2fsprogs-1.40.2-warning-fixes.patch
 
 # http://acl.bestbits.at/download.html
