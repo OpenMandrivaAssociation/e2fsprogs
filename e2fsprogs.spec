@@ -26,10 +26,6 @@ Patch39: e2fsprogs-1.39-multilib.patch
 Patch62: e2fsprogs-1.39-mkinstalldirs.patch
 Patch63: e2fsprogs-1.40.2-warning-fixes.patch
 Patch64: e2fsprogs-1.40.2-swapfs.patch
-Patch65: e2fsprogs-1.40.2-fix-open-create-modes.patch
-Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
-Patch67: e2fsprogs-1.40.2-blkid-FAT-magic-not-on-strict-position.patch
-Patch68: e2fsprogs-1.40.2-blkid-squashfs.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -116,14 +112,6 @@ features.
 %patch63 -p1 -b .warnings
 # Fix ext2fs_swap_inode_full() on bigendian boxes
 %patch64 -p1 -b .swapfs
-# fix one open("foo", O_CREAT) caller with no mode
-%patch65 -p1 -b .creatmode
-# protect ->open ops from glibc open-create-mode-checker
-%patch66 -p1 -b .open
-# fix fat probe when there is a real MBR
-%patch67 -p1 -b .blkid-fat
-# detect squashfs in libblkid (#305151)
-%patch68 -p1 -b .blkid-squashfs
 
 rm -f configure
 autoconf
