@@ -30,7 +30,6 @@ Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
 
 %description
