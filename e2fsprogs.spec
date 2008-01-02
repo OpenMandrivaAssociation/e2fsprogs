@@ -6,7 +6,7 @@
 %define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
-Version: 1.40.3
+Version: 1.40.4
 Release: %mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
@@ -201,6 +201,7 @@ rm -rf $RPM_BUILD_ROOT
 %_sbindir/mklost+found
 # FIXME: why isn't this marked %config(noreplace)?
 %_sysconfdir/mke2fs.conf
+%_sbindir/uuidd
 
 %_bindir/chattr
 %_bindir/lsattr
@@ -228,6 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
+%_mandir/man8/uuidd.8*
 
 %_root_sbindir/blkid
 %_mandir/man8/blkid.8*
