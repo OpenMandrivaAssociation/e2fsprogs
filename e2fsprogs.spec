@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.4
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -51,7 +51,7 @@ performance of an ext2 filesystem.
 %package -n %libname
 Summary: The libraries for Ext2fs
 Group: System/Libraries
-Requires: e2fsprogs = %{version}-%{release}
+Requires: e2fsprogs
 
 %description -n %libname
 The e2fsprogs package contains a number of utilities for creating,
