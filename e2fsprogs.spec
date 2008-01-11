@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.4
-Release: %mkrel 3
+Release: %mkrel 4
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -17,6 +17,7 @@ Patch4: e2fsprogs-1.36-autoconf.patch
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
+Patch9: e2fsprogs-1.40.4-fixed-length-ntfs-UUID.patch
 #rh patches
 Patch30: e2fsprogs-1.38-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
@@ -97,6 +98,7 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
+%patch9 -p1 -b .ntfs-uuid
 # enable tune2fs to set and clear the resize inode (#167816)
 %patch30 -p1 -b .resize-inode
 # drop timestamp from mo files (#168815/168814/245653)
