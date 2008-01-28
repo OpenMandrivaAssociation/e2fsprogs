@@ -17,15 +17,12 @@ Patch4: e2fsprogs-1.36-autoconf.patch
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
-Patch9: e2fsprogs-1.40.4-fixed-length-ntfs-UUID.patch
 #rh patches
 Patch30: e2fsprogs-1.38-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
-Patch34: e2fsprogs-1.39-blkid-devmapper.patch
 Patch36: e2fsprogs-1.38-etcblkid.patch
 Patch39: e2fsprogs-1.39-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
-Patch63: e2fsprogs-1.40.2-warning-fixes.patch
 
 Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
 
@@ -98,21 +95,16 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
-%patch9 -p1 -b .ntfs-uuid
 # enable tune2fs to set and clear the resize inode (#167816)
 %patch30 -p1 -b .resize-inode
 # drop timestamp from mo files (#168815/168814/245653)
 %patch32 -p1 -b .pottcdate
-# look at device mapper devices
-%patch34 -p1 -b .dm
 # put blkid.tab in /etc/blkid/
 %patch36 -p1 -b .etcblkid
 # Fix multilib conflicts (#192665)
 %patch39 -p1 -b .multilib
 # Fix for newer autoconf (#220715)
 %patch62 -p1 -b .mkinstalldirs
-# Fix type warning in badblocks
-%patch63 -p1 -b .warnings
 
 # protect ->open ops from glibc open-create-mode-checker
 %patch66 -p1 -b .open
@@ -126,8 +118,6 @@ chmod 644 po/*.po
 %build
 %configure2_5x --enable-elf-shlibs
 make libs progs docs
-# use e2fsck shared instead, avoid patch.
-cp -af e2fsck/e2fsck.shared e2fsck/e2fsck
 
 %check
 # FIXME: all tests must pass
