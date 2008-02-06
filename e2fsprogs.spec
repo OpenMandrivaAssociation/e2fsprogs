@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.5
-Release: %mkrel 1
+Release: %mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -190,6 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/mkfs.ext3
 %_sbindir/filefrag
 %_sbindir/mklost+found
+%dir /etc/blkid
 # FIXME: why isn't this marked %config(noreplace)?
 %_sysconfdir/mke2fs.conf
 %_sbindir/uuidd
