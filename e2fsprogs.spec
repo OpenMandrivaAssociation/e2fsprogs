@@ -7,16 +7,18 @@
 
 Name: e2fsprogs
 Version: 1.40.5
-Release: %mkrel 2
+Release: %mkrel 3
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
 Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
+Source1: e3jsize
 Patch4: e2fsprogs-1.36-autoconf.patch
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
+Patch9: e2fsprogs-1.39-istat.patch
 #rh patches
 Patch30: e2fsprogs-1.38-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
@@ -95,6 +97,7 @@ features.
 %patch5 -p1 -b .strip-me
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
+%patch9 -p1 -b .istat
 # enable tune2fs to set and clear the resize inode (#167816)
 %patch30 -p1 -b .resize-inode
 # drop timestamp from mo files (#168815/168814/245653)
@@ -118,6 +121,7 @@ chmod 644 po/*.po
 %build
 %configure2_5x --enable-elf-shlibs
 make libs progs docs
+make -C e2fsck e2fsck.static
 
 %check
 # FIXME: all tests must pass
@@ -157,6 +161,11 @@ rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
 
 chmod +x $RPM_BUILD_ROOT%_bindir/{mk_cmds,compile_et}
 
+install -m 755 e2fsck/e2fsck.static $RPM_BUILD_ROOT%{_root_sbindir}
+install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_root_sbindir}
+ln -f $RPM_BUILD_ROOT%{_root_sbindir}/mke2fs \
+	$RPM_BUILD_ROOT%{_root_sbindir}/mke3fs
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -177,11 +186,14 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/debugfs
 %_root_sbindir/dumpe2fs
 %_root_sbindir/e2fsck
+%_root_sbindir/e2fsck.static
 %_root_sbindir/e2label
+%_root_sbindir/e3jsize
 %_root_sbindir/fsck
 %_root_sbindir/fsck.ext2
 %_root_sbindir/fsck.ext3
 %_root_sbindir/mke2fs
+%_root_sbindir/mke3fs
 %_root_sbindir/mkfs.ext2
 %_root_sbindir/resize2fs
 %_root_sbindir/tune2fs
