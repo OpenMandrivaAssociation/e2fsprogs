@@ -6,8 +6,8 @@
 %define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
-Version: 1.40.5
-Release: %mkrel 3
+Version: 1.40.6
+Release: %mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
