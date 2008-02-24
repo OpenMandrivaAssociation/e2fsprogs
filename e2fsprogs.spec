@@ -27,6 +27,7 @@ Patch39: e2fsprogs-1.39-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
 Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
+Patch67: e2fsprogs-1.40.6-ulsuspend.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -111,6 +112,8 @@ features.
 
 # protect ->open ops from glibc open-create-mode-checker
 %patch66 -p1 -b .open
+# support user level suspend signature
+%patch67 -p1 -b .ulsuspend
 
 rm -f configure
 autoconf
