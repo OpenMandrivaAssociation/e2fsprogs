@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.6
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
