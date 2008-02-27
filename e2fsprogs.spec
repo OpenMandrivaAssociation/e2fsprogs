@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.6
-Release: %manbo_mkrel 2
+Release: %manbo_mkrel 3
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -28,6 +28,7 @@ Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
 Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
+Patch68: e2fsprogs-1.40.6-mke3fs.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -114,6 +115,8 @@ features.
 %patch66 -p1 -b .open
 # support user level suspend signature
 %patch67 -p1 -b .ulsuspend
+# create journal if called as mke3fs
+%patch68 -p1 -b .mke3fs
 
 rm -f configure
 autoconf
