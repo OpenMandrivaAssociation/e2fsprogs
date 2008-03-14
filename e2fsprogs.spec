@@ -20,7 +20,7 @@ Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
 #rh patches
-Patch30: e2fsprogs-1.38-resize-inode.patch
+Patch30: e2fsprogs-1.40.7-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
 Patch36: e2fsprogs-1.38-etcblkid.patch
 Patch39: e2fsprogs-1.39-multilib.patch
