@@ -6,7 +6,7 @@
 %define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
-Version: 1.40.7
+Version: 1.40.8
 Release: %manbo_mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
@@ -125,7 +125,7 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs
+%configure2_5x --enable-elf-shlibs --enable-dynamic-e2fsck
 make libs progs docs
 make -C e2fsck e2fsck.static
 
