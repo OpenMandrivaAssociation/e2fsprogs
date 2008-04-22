@@ -7,7 +7,7 @@
 
 Name: e2fsprogs
 Version: 1.40.8
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -19,6 +19,7 @@ Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
+Patch10: e2fsprogs-1.40.8-german-mistranslation.patch
 #rh patches
 Patch30: e2fsprogs-1.40.7-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
@@ -100,6 +101,8 @@ features.
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
 %patch9 -p1 -b .istat
+# fsck does not accept the 'j' with German locale (#39803)
+%patch10 -p1 -b .german-mistranslation
 # enable tune2fs to set and clear the resize inode (#167816)
 %patch30 -p1 -b .resize-inode
 # drop timestamp from mo files (#168815/168814/245653)
