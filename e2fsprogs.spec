@@ -6,8 +6,8 @@
 %define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
-Version: 1.40.8
-Release: %manbo_mkrel 2
+Version: 1.41.0
+Release: %manbo_mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -19,12 +19,11 @@ Patch5: e2fsprogs-1.36-strip-me.patch
 Patch7: e2fsprogs-1.38-tst_ostype-buildfix.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
-Patch10: e2fsprogs-1.40.8-german-mistranslation.patch
 #rh patches
 Patch30: e2fsprogs-1.40.7-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
 Patch36: e2fsprogs-1.38-etcblkid.patch
-Patch39: e2fsprogs-1.39-multilib.patch
+Patch39: e2fsprogs-1.41.0-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
 Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
@@ -101,8 +100,6 @@ features.
 %patch7 -p1 -b .tst_ostype
 %patch8 -p1 -b .check-future
 %patch9 -p1 -b .istat
-# fsck does not accept the 'j' with German locale (#39803)
-%patch10 -p1 -b .german-mistranslation
 # enable tune2fs to set and clear the resize inode (#167816)
 %patch30 -p1 -b .resize-inode
 # drop timestamp from mo files (#168815/168814/245653)
@@ -203,16 +200,21 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/e2fsck.static
 %_root_sbindir/e2image
 %_root_sbindir/e2label
+%_root_sbindir/e2undo
 %_root_sbindir/e3jsize
 %_root_sbindir/findfs
 %_root_sbindir/fsck
 %_root_sbindir/fsck.ext2
 %_root_sbindir/fsck.ext3
+%_root_sbindir/fsck.ext4
+%_root_sbindir/fsck.ext4dev
 %_root_sbindir/logsave
 %_root_sbindir/mke2fs
 %_root_sbindir/mke3fs
 %_root_sbindir/mkfs.ext2
 %_root_sbindir/mkfs.ext3
+%_root_sbindir/mkfs.ext4
+%_root_sbindir/mkfs.ext4dev
 %_root_sbindir/resize2fs
 %_root_sbindir/tune2fs
 %dir /etc/blkid
@@ -236,15 +238,20 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/e2fsck.8*
 %_mandir/man8/e2image.8*
 %_mandir/man8/e2label.8*
+%_mandir/man8/e2undo.8.lzma
 %_mandir/man8/filefrag.8*
 %_mandir/man8/findfs.8*
 %_mandir/man8/fsck.8*
 %_mandir/man8/fsck.ext2.8*
 %_mandir/man8/fsck.ext3.8*
+%_mandir/man8/fsck.ext4.8.lzma
+%_mandir/man8/fsck.ext4dev.8.lzma
 %_mandir/man8/logsave.8*
 %_mandir/man8/mke2fs.8*
 %_mandir/man8/mkfs.ext2.8*
 %_mandir/man8/mkfs.ext3.8*
+%_mandir/man8/mkfs.ext4.8.lzma
+%_mandir/man8/mkfs.ext4dev.8.lzma
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
@@ -252,7 +259,6 @@ rm -rf $RPM_BUILD_ROOT
 %_sbindir/filefrag
 %_sbindir/mklost+found
 %_sbindir/uuidd
-
 
 %files -n %libname
 %defattr(-,root,root)
