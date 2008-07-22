@@ -196,29 +196,29 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc README RELEASE-NOTES
 %_root_sbindir/badblocks
+%_root_sbindir/blkid
 %_root_sbindir/debugfs
 %_root_sbindir/dumpe2fs
 %_root_sbindir/e2fsck
 %_root_sbindir/e2fsck.static
+%_root_sbindir/e2image
 %_root_sbindir/e2label
 %_root_sbindir/e3jsize
+%_root_sbindir/findfs
 %_root_sbindir/fsck
 %_root_sbindir/fsck.ext2
 %_root_sbindir/fsck.ext3
+%_root_sbindir/logsave
 %_root_sbindir/mke2fs
 %_root_sbindir/mke3fs
 %_root_sbindir/mkfs.ext2
+%_root_sbindir/mkfs.ext3
 %_root_sbindir/resize2fs
 %_root_sbindir/tune2fs
-%_root_sbindir/e2image
-%_root_sbindir/findfs
-%_root_sbindir/mkfs.ext3
-%_sbindir/filefrag
-%_sbindir/mklost+found
 %dir /etc/blkid
 # FIXME: why isn't this marked %config(noreplace)?
 %_sysconfdir/mke2fs.conf
-%_sbindir/uuidd
+
 
 %_bindir/chattr
 %_bindir/lsattr
@@ -230,6 +230,7 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man5/e2fsck.conf.5*
 %_mandir/man5/mke2fs.conf.5*
 %_mandir/man8/badblocks.8*
+%_mandir/man8/blkid.8*
 %_mandir/man8/debugfs.8*
 %_mandir/man8/dumpe2fs.8*
 %_mandir/man8/e2fsck.8*
@@ -240,6 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/fsck.8*
 %_mandir/man8/fsck.ext2.8*
 %_mandir/man8/fsck.ext3.8*
+%_mandir/man8/logsave.8*
 %_mandir/man8/mke2fs.8*
 %_mandir/man8/mkfs.ext2.8*
 %_mandir/man8/mkfs.ext3.8*
@@ -247,11 +249,9 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
 %_mandir/man8/uuidd.8*
-
-%_root_sbindir/blkid
-%_mandir/man8/blkid.8*
-%_root_sbindir/logsave
-%_mandir/man8/logsave.8*
+%_sbindir/filefrag
+%_sbindir/mklost+found
+%_sbindir/uuidd
 
 
 %files -n %libname
