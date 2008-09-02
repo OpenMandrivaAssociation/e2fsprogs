@@ -26,7 +26,7 @@ Patch36: e2fsprogs-1.41.1-etcblkid.patch
 Patch39: e2fsprogs-1.41.0-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
-Patch66: e2fsprogs-1.40.2-protect-open-ops.patch
+Patch66: e2fsprogs-1.41.1-protect-open-ops.patch
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
 Patch68: e2fsprogs-1.40.6-mke3fs.patch
 
