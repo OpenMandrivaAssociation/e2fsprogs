@@ -22,7 +22,7 @@ Patch9: e2fsprogs-1.39-istat.patch
 #rh patches
 Patch30: e2fsprogs-1.40.7-resize-inode.patch
 Patch32: e2fsprogs-1.38-no_pottcdate.patch
-Patch36: e2fsprogs-1.38-etcblkid.patch
+Patch36: e2fsprogs-1.41.1-etcblkid.patch
 Patch39: e2fsprogs-1.41.0-multilib.patch
 Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
