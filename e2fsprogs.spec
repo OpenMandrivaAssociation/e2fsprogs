@@ -1,3 +1,5 @@
+%define _default_patch_fuzz        2
+
 %define url http://prdownloads.sourceforge.net/e2fsprogs
 %define	_root_sbindir	/sbin
 %define	_root_libdir	/%_lib
@@ -7,7 +9,7 @@
 
 Name: e2fsprogs
 Version: 1.41.3
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
