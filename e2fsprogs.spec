@@ -20,11 +20,7 @@ Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
 Patch10: e2fsprogs-1.41.1-handle-UUID.patch
 #rh patches
-Patch30: e2fsprogs-1.40.7-resize-inode.patch
-Patch32: e2fsprogs-1.38-no_pottcdate.patch
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
-Patch39: e2fsprogs-1.41.0-multilib.patch
-Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 
 Patch66: e2fsprogs-1.41.1-protect-open-ops.patch
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
@@ -101,16 +97,8 @@ features.
 %patch8 -p1 -b .check-future
 %patch9 -p1 -b .istat
 %patch10 -p1 -b .UUID
-# enable tune2fs to set and clear the resize inode (#167816)
-%patch30 -p1 -b .resize-inode
-# drop timestamp from mo files (#168815/168814/245653)
-%patch32 -p1 -b .pottcdate
 # put blkid.tab in /etc/blkid/
 %patch36 -p1 -b .etcblkid
-# Fix multilib conflicts (#192665)
-%patch39 -p1 -b .multilib
-# Fix for newer autoconf (#220715)
-%patch62 -p1 -b .mkinstalldirs
 
 # protect ->open ops from glibc open-create-mode-checker
 %patch66 -p1 -b .open
