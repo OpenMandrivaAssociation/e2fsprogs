@@ -30,6 +30,7 @@ Patch62: e2fsprogs-1.40.3-mkinstalldirs.patch
 Patch66: e2fsprogs-1.41.1-protect-open-ops.patch
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
 Patch68: e2fsprogs-1.40.6-mke3fs.patch
+Patch69: e2fsprogs-1.41.3-fix-build-with-Werror_format-security.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
