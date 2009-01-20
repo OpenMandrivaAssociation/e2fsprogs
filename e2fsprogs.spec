@@ -120,6 +120,7 @@ features.
 %patch67 -p1 -b .ulsuspend
 # create journal if called as mke3fs
 %patch68 -p1 -b .mke3fs
+%patch69 -p1 -b .fix-build
 
 rm -f configure
 autoconf
