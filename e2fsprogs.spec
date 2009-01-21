@@ -24,7 +24,6 @@ Patch10: e2fsprogs-1.41.1-handle-UUID.patch
 #rh patches
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
 
-Patch66: e2fsprogs-1.41.1-protect-open-ops.patch
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
 Patch68: e2fsprogs-1.40.6-mke3fs.patch
 Patch69: e2fsprogs-1.41.3-fix-build-with-Werror_format-security.patch
@@ -102,8 +101,6 @@ features.
 # put blkid.tab in /etc/blkid/
 %patch36 -p1 -b .etcblkid
 
-# protect ->open ops from glibc open-create-mode-checker
-%patch66 -p1 -b .open
 # support user level suspend signature
 %patch67 -p1 -b .ulsuspend
 # create journal if called as mke3fs
