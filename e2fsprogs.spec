@@ -17,7 +17,6 @@ Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
-Patch9: e2fsprogs-1.39-istat.patch
 Patch10: e2fsprogs-1.41.3-handle-UUID.patch
 #rh patches
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
@@ -93,7 +92,6 @@ features.
 %prep
 %setup -q
 %patch5 -p1 -b .strip-me
-%patch9 -p1 -b .istat
 %patch10 -p1 -b .UUID
 # put blkid.tab in /etc/blkid/
 %patch36 -p1 -b .etcblkid
