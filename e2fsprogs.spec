@@ -17,13 +17,16 @@ Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
+# (tv) commited upstream:
 Patch10: e2fsprogs-1.41.3-handle-UUID.patch
 #rh patches
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
 
+# (tv) commited upstream:
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
 # (tv) commited upstream:
 Patch68: e2fsprogs-1.41.3-mke3fs.patch
+# (tv) commited upstream:
 Patch69: e2fsprogs-1.41.3-fix-build-with-Werror_format-security.patch
 
 # http://acl.bestbits.at/download.html
