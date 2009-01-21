@@ -17,7 +17,6 @@ Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
-Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
 Patch10: e2fsprogs-1.41.3-handle-UUID.patch
 #rh patches
@@ -94,7 +93,6 @@ features.
 %prep
 %setup -q
 %patch5 -p1 -b .strip-me
-%patch8 -p1 -b .check-future
 %patch9 -p1 -b .istat
 %patch10 -p1 -b .UUID
 # put blkid.tab in /etc/blkid/
@@ -160,6 +158,8 @@ install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_root_sbindir}
 ln -f $RPM_BUILD_ROOT%{_root_sbindir}/mke2fs \
 	$RPM_BUILD_ROOT%{_root_sbindir}/mke3fs
 
+install -p -m 0644 e2fsck/e2fsck.conf.ubuntu $RPM_BUILD_ROOT%_sysconfdir/e2fsck.conf;
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -207,7 +207,7 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/tune2fs
 %dir /etc/blkid
 # FIXME: why isn't this marked %config(noreplace)?
-%_sysconfdir/mke2fs.conf
+%_sysconfdir/*.conf
 
 
 %_bindir/chattr
