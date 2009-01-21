@@ -15,7 +15,6 @@ License: GPL
 Group: System/Kernel and hardware
 Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
-Patch4: e2fsprogs-1.36-autoconf.patch
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
@@ -93,7 +92,6 @@ features.
 
 %prep
 %setup -q
-%patch4 -p0
 %patch5 -p1 -b .strip-me
 %patch8 -p1 -b .check-future
 %patch9 -p1 -b .istat
