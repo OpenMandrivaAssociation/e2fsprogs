@@ -19,12 +19,13 @@ Source1: e3jsize
 Patch5: e2fsprogs-1.36-strip-me.patch
 Patch8: e2fsprogs-1.40-handle-last-check-in-the-future.patch
 Patch9: e2fsprogs-1.39-istat.patch
-Patch10: e2fsprogs-1.41.1-handle-UUID.patch
+Patch10: e2fsprogs-1.41.3-handle-UUID.patch
 #rh patches
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
 
 Patch67: e2fsprogs-1.40.6-ulsuspend.patch
-Patch68: e2fsprogs-1.40.6-mke3fs.patch
+# (tv) commited upstream:
+Patch68: e2fsprogs-1.41.3-mke3fs.patch
 Patch69: e2fsprogs-1.41.3-fix-build-with-Werror_format-security.patch
 
 # http://acl.bestbits.at/download.html
