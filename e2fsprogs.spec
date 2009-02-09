@@ -8,8 +8,8 @@
 %define devnameold %{mklibname ext2fs 2}-devel
 
 Name: e2fsprogs
-Version: 1.41.3
-Release: %manbo_mkrel 3
+Version: 1.41.4
+Release: %manbo_mkrel 1
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -17,17 +17,10 @@ Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
-# (tv) commited upstream:
-Patch10: e2fsprogs-1.41.3-handle-UUID.patch
+
 #rh patches
 Patch36: e2fsprogs-1.41.1-etcblkid.patch
 
-# (tv) commited upstream:
-Patch67: e2fsprogs-1.40.6-ulsuspend.patch
-# (tv) commited upstream:
-Patch68: e2fsprogs-1.41.3-mke3fs.patch
-# (tv) commited upstream:
-Patch69: e2fsprogs-1.41.3-fix-build-with-Werror_format-security.patch
 
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
@@ -95,15 +88,8 @@ features.
 %prep
 %setup -q
 %patch5 -p1 -b .strip-me
-%patch10 -p1 -b .UUID
 # put blkid.tab in /etc/blkid/
 %patch36 -p1 -b .etcblkid
-
-# support user level suspend signature
-%patch67 -p1 -b .ulsuspend
-# create journal if called as mke3fs
-%patch68 -p1 -b .mke3fs
-%patch69 -p1 -b .fix-build
 
 rm -f configure
 autoconf
