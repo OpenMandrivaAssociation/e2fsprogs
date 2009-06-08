@@ -9,7 +9,7 @@
 
 Name: e2fsprogs
 Version: 1.41.6
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -18,14 +18,12 @@ Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 
-#rh patches
-Patch36: e2fsprogs-1.41.1-etcblkid.patch
-
-
 # http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
+#BuildRequires:	libblkid-devel
+BuildRequires:	libext2fs-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -88,8 +86,6 @@ features.
 %prep
 %setup -q
 %patch5 -p1 -b .strip-me
-# put blkid.tab in /etc/blkid/
-%patch36 -p1 -b .etcblkid
 
 rm -f configure
 autoconf
@@ -98,7 +94,7 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs --enable-dynamic-e2fsck
+%configure2_5x --enable-elf-shlibs --enable-dynamic-e2fsck --disable-libblkid
 make libs progs docs
 make -C e2fsck e2fsck.static
 
@@ -120,12 +116,11 @@ export PATH=/sbin:$PATH
 %makeinstall_std install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
-for i in libblkid.so.1 libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2 libuuid.so.1; do
+for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2 libuuid.so.1; do
 	ln -s $i $RPM_BUILD_ROOT/%_root_libdir/${i%.[0-9]}
 done
 
 rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libblkid.so \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libcom_err.so \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libe2p.so \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libext2fs.so \
@@ -134,7 +129,6 @@ rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ext2fs/ext2_types.h
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/blkid/blkid_types.h
 
 %find_lang %{name}
 
@@ -168,7 +162,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc README RELEASE-NOTES
 %_root_sbindir/badblocks
-%_root_sbindir/blkid
 %_root_sbindir/debugfs
 %_root_sbindir/dumpe2fs
 %_root_sbindir/e2fsck
@@ -177,7 +170,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/e2label
 %_root_sbindir/e2undo
 %_root_sbindir/e3jsize
-%_root_sbindir/findfs
 %_root_sbindir/fsck
 %_root_sbindir/fsck.ext2
 %_root_sbindir/fsck.ext3
@@ -192,7 +184,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/mkfs.ext4dev
 %_root_sbindir/resize2fs
 %_root_sbindir/tune2fs
-%dir /etc/blkid
 # FIXME: why isn't this marked %config(noreplace)?
 %_sysconfdir/*.conf
 
@@ -207,7 +198,6 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man5/e2fsck.conf.5*
 %_mandir/man5/mke2fs.conf.5*
 %_mandir/man8/badblocks.8*
-%_mandir/man8/blkid.8*
 %_mandir/man8/debugfs.8*
 %_mandir/man8/dumpe2fs.8*
 %_mandir/man8/e2fsck.8*
@@ -215,7 +205,6 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/e2label.8*
 %_mandir/man8/e2undo.8.lzma
 %_mandir/man8/filefrag.8*
-%_mandir/man8/findfs.8*
 %_mandir/man8/fsck.8*
 %_mandir/man8/fsck.ext2.8*
 %_mandir/man8/fsck.ext3.8*
@@ -244,7 +233,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_libdir/libss.so.*
 %_root_libdir/libuuid.so.*
 
-%_root_libdir/libblkid.so.*
 %_libdir/e2initrd_helper
 
 %files -n %{devname}
@@ -252,12 +240,10 @@ rm -rf $RPM_BUILD_ROOT
 %_infodir/libext2fs.info*
 %_bindir/compile_et
 %_mandir/man1/compile_et.1*
-%_mandir/man3/libblkid.3*
 %_bindir/mk_cmds
 %_mandir/man1/mk_cmds.1*
 %_libdir/pkgconfig/*
 
-%_libdir/libblkid.so
 %_libdir/libcom_err.so
 %_libdir/libe2p.a
 %_libdir/libe2p.so
@@ -279,8 +265,3 @@ rm -rf $RPM_BUILD_ROOT
 %_includedir/e2p/e2p.h
 %_mandir/man3/com_err.3*
 
-%_includedir/blkid/blkid.h
-%_includedir/blkid/blkid_types.h
-%multiarch %dir %multiarch_includedir/blkid
-%multiarch %multiarch_includedir/blkid/blkid_types.h
-%_libdir/libblkid.a
