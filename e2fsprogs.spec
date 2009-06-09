@@ -7,9 +7,11 @@
 %define	devname	%mklibname ext2fs -d
 %define devnameold %{mklibname ext2fs 2}-devel
 
+%define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
+
 Name: e2fsprogs
 Version: 1.41.6
-Release: %manbo_mkrel 2
+Release: %manbo_mkrel 3
 Summary: Utilities used for the second extended (ext2) filesystem
 License: GPL
 Group: System/Kernel and hardware
@@ -18,12 +20,10 @@ Source1: e3jsize
 # (gb) strip references to home build dir
 Patch5: e2fsprogs-1.36-strip-me.patch
 
-# http://acl.bestbits.at/download.html
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
-#BuildRequires:	libblkid-devel
-BuildRequires:	libext2fs-devel
+BuildRequires:	libblkid-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -94,20 +94,12 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs --enable-dynamic-e2fsck --disable-libblkid
-make libs progs docs
+%configure2_5x --enable-elf-shlibs --disable-libblkid
+%make
 make -C e2fsck e2fsck.static
 
 %check
-# FIXME: all tests must pass
-# r_move_itable: resize2fs with resize_inode: failed
-# r_resize_inode: resize2fs with resize_inode: failed
-# 80 tests succeeded	2 tests failed
-%ifnarch x86_64
 LC_ALL=C make check
-%else
-LC_ALL=C make check || :
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
