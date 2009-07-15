@@ -18,7 +18,7 @@ Group: System/Kernel and hardware
 Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1: e3jsize
 # (gb) strip references to home build dir
-Patch5: e2fsprogs-1.36-strip-me.patch
+Patch5: e2fsprogs-1.41.8-strip-me.patch
 
 Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
