@@ -12,7 +12,7 @@
 Name: e2fsprogs
 Version: 1.41.8
 Release: %manbo_mkrel 1
-Summary: Utilities used for the second extended (ext2) filesystem
+Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
 Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
@@ -27,18 +27,15 @@ BuildRequires:	libblkid-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in second
-extended (ext2) filesystems.  E2fsprogs contains e2fsck (used to repair
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
 filesystem inconsistencies after an unclean shutdown), mke2fs (used to
 initialize a partition to contain an empty ext2 filesystem), debugfs
 (used to examine the internal structure of a filesystem, to manually
 repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters) and most of the other core ext2fs
-filesystem utilities.
-
-You should install the e2fsprogs package if you need to manage the
-performance of an ext2 filesystem.
-
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
 
 %package -n %libname
 Summary: The libraries for Ext2fs
@@ -47,16 +44,17 @@ Requires: e2fsprogs
 
 %description -n %libname
 The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in second
-extended (ext2) filesystems.  E2fsprogs contains e2fsck (used to repair
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
 filesystem inconsistencies after an unclean shutdown), mke2fs (used to
 initialize a partition to contain an empty ext2 filesystem), debugfs
 (used to examine the internal structure of a filesystem, to manually
 repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters) and most of the other core ext2fs
-filesystem utilities.
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
 
-You should install %libname to use tools who use ext2fs features.
+This package contains the shared libraries.
 
 %package -n %{devname}
 Summary: The libraries for Ext2fs
@@ -71,14 +69,15 @@ Provides:  ext2fs-devel = %{version}-%{release}
 
 %description -n %{devname}
 The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in second
-extended (ext2) filesystems.  E2fsprogs contains e2fsck (used to repair
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
 filesystem inconsistencies after an unclean shutdown), mke2fs (used to
 initialize a partition to contain an empty ext2 filesystem), debugfs
 (used to examine the internal structure of a filesystem, to manually
 repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters) and most of the other core ext2fs
-filesystem utilities.
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
 
 You should install %libname to use tools that compile with ext2fs
 features.
