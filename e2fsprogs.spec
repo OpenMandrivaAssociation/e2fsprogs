@@ -11,7 +11,7 @@
 
 Name: e2fsprogs
 Version: 1.41.8
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -27,6 +27,7 @@ Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
 BuildRequires:	libblkid-devel
+BuildRequires:	libuuid-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -97,7 +98,7 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs --disable-libblkid
+%configure2_5x --enable-elf-shlibs --disable-libblkid --disable-libuuid --disable-fsck
 %make
 make -C e2fsck e2fsck.static
 
@@ -111,7 +112,7 @@ export PATH=/sbin:$PATH
 %makeinstall_std install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
-for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2 libuuid.so.1; do
+for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
 	ln -s $i $RPM_BUILD_ROOT/%_root_libdir/${i%.[0-9]}
 done
 
@@ -119,8 +120,7 @@ rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libcom_err.so \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libe2p.so \
 	$RPM_BUILD_ROOT/%{_root_libdir}/libext2fs.so \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libss.so \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libuuid.so
+	$RPM_BUILD_ROOT/%{_root_libdir}/libss.so
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ext2fs/ext2_types.h
@@ -165,7 +165,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_sbindir/e2label
 %_root_sbindir/e2undo
 %_root_sbindir/e3jsize
-%_root_sbindir/fsck
 %_root_sbindir/fsck.ext2
 %_root_sbindir/fsck.ext3
 %_root_sbindir/fsck.ext4
@@ -185,11 +184,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %_bindir/chattr
 %_bindir/lsattr
-%_bindir/uuidgen
 %_mandir/man1/chattr.1*
 %_mandir/man1/lsattr.1*
-%_mandir/man1/uuidgen.1*
-%_mandir/man3/uuid*
 %_mandir/man5/e2fsck.conf.5*
 %_mandir/man5/mke2fs.conf.5*
 %_mandir/man8/badblocks.8*
@@ -200,7 +196,6 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/e2label.8*
 %_mandir/man8/e2undo.8.lzma
 %_mandir/man8/filefrag.8*
-%_mandir/man8/fsck.8*
 %_mandir/man8/fsck.ext2.8*
 %_mandir/man8/fsck.ext3.8*
 %_mandir/man8/fsck.ext4.8.lzma
@@ -214,10 +209,8 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
-%_mandir/man8/uuidd.8*
 %_sbindir/filefrag
 %_sbindir/mklost+found
-%_sbindir/uuidd
 
 %files -n %libname
 %defattr(-,root,root)
@@ -226,7 +219,6 @@ rm -rf $RPM_BUILD_ROOT
 %_root_libdir/libe2p.so.*
 %_root_libdir/libext2fs.so.*
 %_root_libdir/libss.so.*
-%_root_libdir/libuuid.so.*
 
 %_libdir/e2initrd_helper
 
@@ -244,8 +236,6 @@ rm -rf $RPM_BUILD_ROOT
 %_libdir/libe2p.so
 %_libdir/libext2fs.a
 %_libdir/libext2fs.so
-%_libdir/libuuid.a
-%_libdir/libuuid.so
 %_libdir/libcom_err.a
 %_libdir/libss.so
 
@@ -256,7 +246,6 @@ rm -rf $RPM_BUILD_ROOT
 %multiarch %dir %multiarch_includedir/ext2fs
 %multiarch %multiarch_includedir/ext2fs/ext2_types.h
 %_includedir/ss
-%_includedir/uuid
 %_includedir/e2p/e2p.h
 %_mandir/man3/com_err.3*
 
