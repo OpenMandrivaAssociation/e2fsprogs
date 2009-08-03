@@ -98,7 +98,8 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs --disable-libblkid --disable-libuuid --disable-fsck
+%configure2_5x --enable-elf-shlibs --disable-libblkid --disable-libuuid \
+	--disable-fsck --disable-uuidd
 %make
 make -C e2fsck e2fsck.static
 
