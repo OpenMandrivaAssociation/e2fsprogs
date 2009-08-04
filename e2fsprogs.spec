@@ -27,7 +27,7 @@ Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
 BuildRequires:	libblkid-devel
-BuildRequires:	libuuid-devel
+#BuildRequires:	libuuid-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
