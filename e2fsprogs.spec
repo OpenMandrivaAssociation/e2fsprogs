@@ -11,7 +11,7 @@
 
 Name: e2fsprogs
 Version: 1.41.8
-Release: %manbo_mkrel 2
+Release: %manbo_mkrel 3
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -27,7 +27,7 @@ Url: http://e2fsprogs.sourceforge.net/
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildRequires:	texinfo, autoconf
 BuildRequires:	libblkid-devel
-#BuildRequires:	libuuid-devel
+BuildRequires:	libuuid-devel
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
