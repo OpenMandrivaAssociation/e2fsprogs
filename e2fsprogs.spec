@@ -10,8 +10,8 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name: e2fsprogs
-Version: 1.41.8
-Release: %manbo_mkrel 3
+Version: 1.41.9
+Release: %manbo_mkrel 1
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -192,6 +192,7 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/badblocks.8*
 %_mandir/man8/debugfs.8*
 %_mandir/man8/dumpe2fs.8*
+%_mandir/man8/e2freefrag.8*
 %_mandir/man8/e2fsck.8*
 %_mandir/man8/e2image.8*
 %_mandir/man8/e2label.8*
@@ -210,6 +211,7 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
+%_sbindir/e2freefrag
 %_sbindir/filefrag
 %_sbindir/mklost+found
 
