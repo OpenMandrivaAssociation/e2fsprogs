@@ -11,7 +11,7 @@
 
 Name: e2fsprogs
 Version: 1.41.9
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -156,7 +156,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %name.lang
 %defattr(-,root,root)
-%doc README RELEASE-NOTES
+%doc README
 %_root_sbindir/badblocks
 %_root_sbindir/debugfs
 %_root_sbindir/dumpe2fs
@@ -227,6 +227,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{devname}
 %defattr(-,root,root,755)
+%doc RELEASE-NOTES
 %_infodir/libext2fs.info*
 %_bindir/compile_et
 %_mandir/man1/compile_et.1*
