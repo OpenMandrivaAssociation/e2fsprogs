@@ -10,8 +10,8 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name: e2fsprogs
-Version: 1.41.9
-Release: %manbo_mkrel 2
+Version: 1.41.10
+Release: %manbo_mkrel 1
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -134,8 +134,6 @@ install -m 755 e2fsck/e2fsck.static $RPM_BUILD_ROOT%{_root_sbindir}
 install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_root_sbindir}
 ln -f $RPM_BUILD_ROOT%{_root_sbindir}/mke2fs \
 	$RPM_BUILD_ROOT%{_root_sbindir}/mke3fs
-
-install -p -m 0644 e2fsck/e2fsck.conf.ubuntu $RPM_BUILD_ROOT%_sysconfdir/e2fsck.conf;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
