@@ -10,8 +10,8 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name: e2fsprogs
-Version: 1.41.10
-Release: %manbo_mkrel 2
+Version: 1.41.11
+Release: %manbo_mkrel 1
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
