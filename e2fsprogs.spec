@@ -10,7 +10,7 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name: e2fsprogs
-Version: 1.41.12
+Version: 1.41.13
 Release: %manbo_mkrel 1
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
@@ -99,7 +99,7 @@ chmod 644 po/*.po
 
 %build
 %configure2_5x --enable-elf-shlibs --disable-libblkid --disable-libuuid \
-	--disable-fsck --disable-uuidd
+	--disable-fsck --disable-uuidd --enable-symlink-install
 %make
 make -C e2fsck e2fsck.static
 
@@ -194,18 +194,18 @@ rm -rf $RPM_BUILD_ROOT
 %_mandir/man8/e2fsck.8*
 %_mandir/man8/e2image.8*
 %_mandir/man8/e2label.8*
-%_mandir/man8/e2undo.8.lzma
+%_mandir/man8/e2undo.8.*
 %_mandir/man8/filefrag.8*
 %_mandir/man8/fsck.ext2.8*
 %_mandir/man8/fsck.ext3.8*
-%_mandir/man8/fsck.ext4.8.lzma
-%_mandir/man8/fsck.ext4dev.8.lzma
+%_mandir/man8/fsck.ext4.8.*
+%_mandir/man8/fsck.ext4dev.8.*
 %_mandir/man8/logsave.8*
 %_mandir/man8/mke2fs.8*
 %_mandir/man8/mkfs.ext2.8*
 %_mandir/man8/mkfs.ext3.8*
-%_mandir/man8/mkfs.ext4.8.lzma
-%_mandir/man8/mkfs.ext4dev.8.lzma
+%_mandir/man8/mkfs.ext4.8.*
+%_mandir/man8/mkfs.ext4dev.8.*
 %_mandir/man8/mklost+found.8*
 %_mandir/man8/resize2fs.8*
 %_mandir/man8/tune2fs.8*
