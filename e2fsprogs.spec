@@ -11,7 +11,7 @@
 
 Name: e2fsprogs
 Version: 1.41.14
-Release: %manbo_mkrel 1
+Release: %manbo_mkrel 2
 Summary: Utilities used for ext2/ext3/ext4 filesystems
 License: GPL
 Group: System/Kernel and hardware
@@ -245,8 +245,8 @@ rm -rf $RPM_BUILD_ROOT
 %_datadir/ss
 %_includedir/et
 %_includedir/ext2fs
-%multiarch %dir %multiarch_includedir/ext2fs
-%multiarch %multiarch_includedir/ext2fs/ext2_types.h
+%dir %multiarch_includedir/ext2fs
+%multiarch_includedir/ext2fs/ext2_types.h
 %_includedir/ss
 %_includedir/e2p/e2p.h
 %_mandir/man3/com_err.3*
