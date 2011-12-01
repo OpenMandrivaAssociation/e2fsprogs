@@ -107,36 +107,36 @@ make -C e2fsck e2fsck.static
 LC_ALL=C make check
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 export PATH=/sbin:$PATH
 
 %makeinstall_std install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
 for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
-	ln -s $i $RPM_BUILD_ROOT/%_root_libdir/${i%.[0-9]}
+	ln -s $i %{buildroot}/%_root_libdir/${i%.[0-9]}
 done
 
-rm -f	$RPM_BUILD_ROOT%_libdir/libss.a \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libcom_err.so \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libe2p.so \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libext2fs.so \
-	$RPM_BUILD_ROOT/%{_root_libdir}/libss.so
+rm -f	%{buildroot}%_libdir/libss.a \
+	%{buildroot}/%{_root_libdir}/libcom_err.so \
+	%{buildroot}/%{_root_libdir}/libe2p.so \
+	%{buildroot}/%{_root_libdir}/libext2fs.so \
+	%{buildroot}/%{_root_libdir}/libss.so
 
 # multiarch policy, alternative is to use <stdint.h>
-%multiarch_includes $RPM_BUILD_ROOT%{_includedir}/ext2fs/ext2_types.h
+%multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
 
 %find_lang %{name}
 
-chmod +x $RPM_BUILD_ROOT%_bindir/{mk_cmds,compile_et}
+chmod +x %{buildroot}%_bindir/{mk_cmds,compile_et}
 
-install -m 755 e2fsck/e2fsck.static $RPM_BUILD_ROOT%{_root_sbindir}
-install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_root_sbindir}
-ln -f $RPM_BUILD_ROOT%{_root_sbindir}/mke2fs \
-	$RPM_BUILD_ROOT%{_root_sbindir}/mke3fs
+install -m 755 e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
+install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
+ln -f %{buildroot}%{_root_sbindir}/mke2fs \
+	%{buildroot}%{_root_sbindir}/mke3fs
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig
