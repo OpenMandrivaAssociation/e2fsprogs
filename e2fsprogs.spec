@@ -8,8 +8,8 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name:		e2fsprogs
-Version:	1.41.14
-Release:	3
+Version:	1.42
+Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPL
 Group:		System/Kernel and hardware
@@ -179,6 +179,7 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_mandir}/man8/e2image.8*
 %{_mandir}/man8/e2label.8*
 %{_mandir}/man8/e2undo.8.*
+%{_mandir}/man8/e4defrag.8.*
 %{_mandir}/man8/filefrag.8*
 %{_mandir}/man8/fsck.ext2.8*
 %{_mandir}/man8/fsck.ext3.8*
@@ -194,10 +195,11 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_mandir}/man8/resize2fs.8*
 %{_mandir}/man8/tune2fs.8*
 %{_sbindir}/e2freefrag
+%{_sbindir}/e4defrag
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
 
-%files -n %libname
+%files -n %{libname}
 %doc README
 %{_root_libdir}/libcom_err.so.*
 %{_root_libdir}/libe2p.so.*
@@ -221,14 +223,18 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_libdir}/libext2fs.a
 %{_libdir}/libext2fs.so
 %{_libdir}/libcom_err.a
+%{_libdir}/libquota.a
 %{_libdir}/libss.so
 
 %{_datadir}/et
 %{_datadir}/ss
+%{_includedir}/com_err.h
 %{_includedir}/et
 %{_includedir}/ext2fs
 %dir %{multiarch_includedir}/ext2fs
 %{multiarch_includedir}/ext2fs/ext2_types.h
+%dir %{_includedir}/quota
+%{_includedir}/quota/mkquota.h
 %{_includedir}/ss
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
