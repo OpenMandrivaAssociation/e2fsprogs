@@ -58,8 +58,8 @@ This package contains the shared libraries.
 %package -n	%{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Provides:	ext2fs-devel = %{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	ext2fs-devel = %{EVRD}
 
 %description -n	%{devname}
 The e2fsprogs package contains a number of utilities for creating,
