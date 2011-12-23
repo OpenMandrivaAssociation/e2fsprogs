@@ -13,7 +13,7 @@ Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
-Source0:	http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
+Source0:	http://osdn.dl.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
 Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
@@ -23,8 +23,8 @@ Patch5:		e2fsprogs-1.41.8-strip-me.patch
 
 Url:		http://e2fsprogs.sourceforge.net/
 BuildRequires:	texinfo autoconf
-BuildRequires:	libblkid-devel
-BuildRequires:	libuuid-devel
+BuildRequires:	pkgconfig(blkid)
+BuildRequires:	pkgconfig(uuid)
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
