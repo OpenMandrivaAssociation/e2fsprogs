@@ -2,7 +2,6 @@
 %define	_root_libdir	/%{_lib}
 %define libname %mklibname ext2fs 2
 %define	devname	%mklibname ext2fs -d
-%define devnameold %{mklibname ext2fs 2}-devel
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
@@ -59,12 +58,7 @@ This package contains the shared libraries.
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Obsoletes:	%{name}-devel < %{version}-%{release}
-Obsoletes:	%{devnameold}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	libext2fs-devel = %{version}-%{release}
-Provides:	libe2fsprogs-devel = %{version}-%{release}
-Provides:	ext2fs-devel = %{version}-%{release}
 
 %description -n	%{devname}
 The e2fsprogs package contains a number of utilities for creating,
