@@ -1,6 +1,7 @@
 %define	_root_sbindir	/sbin
 %define	_root_libdir	/%{_lib}
-%define libname %mklibname ext2fs 2
+%define	major	2
+%define libname %mklibname ext2fs %{major}
 %define	devname	%mklibname ext2fs -d
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
@@ -58,7 +59,7 @@ This package contains the shared libraries.
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
+Provides:	ext2fs-devel = %{version}-%{release}
 
 %description -n	%{devname}
 The e2fsprogs package contains a number of utilities for creating,
@@ -196,10 +197,10 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 
 %files -n %{libname}
 %doc README
-%{_root_libdir}/libcom_err.so.*
-%{_root_libdir}/libe2p.so.*
-%{_root_libdir}/libext2fs.so.*
-%{_root_libdir}/libss.so.*
+%{_root_libdir}/libcom_err.so.%{major}*
+%{_root_libdir}/libe2p.so.%{major}*
+%{_root_libdir}/libext2fs.so.%{major}*
+%{_root_libdir}/libss.so.%{major}*
 
 %{_libdir}/e2initrd_helper
 
