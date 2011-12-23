@@ -163,8 +163,7 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_root_sbindir}/mkfs.ext4dev
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
-# FIXME: why isn't this marked %config(noreplace)?
-%{_sysconfdir}/*.conf
+%config(noreplace) %{_sysconfdir}/mke2fs.conf
 
 
 %{_bindir}/chattr
