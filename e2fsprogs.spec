@@ -11,7 +11,7 @@ Name:		e2fsprogs
 Version:	1.42
 Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
-License:	GPL
+License:	GPLv2
 Group:		System/Kernel and hardware
 Source0:	http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
 Source1:	e3jsize
