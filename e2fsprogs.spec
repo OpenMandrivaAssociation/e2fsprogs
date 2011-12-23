@@ -40,7 +40,6 @@ utilities.
 %package -n	%{libname}
 Summary:	The libraries for Ext2fs
 Group:		System/Libraries
-Requires:	e2fsprogs
 
 %description -n %{libname}
 The e2fsprogs package contains a number of utilities for creating,
