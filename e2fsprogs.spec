@@ -73,7 +73,7 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
-You should install %libname to use tools that compile with ext2fs
+You should install %{libname} to use tools that compile with ext2fs
 features.
 
 %prep
