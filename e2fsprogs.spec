@@ -1,6 +1,5 @@
-%define url http://prdownloads.sourceforge.net/e2fsprogs
 %define	_root_sbindir	/sbin
-%define	_root_libdir	/%_lib
+%define	_root_libdir	/%{_lib}
 %define libname %mklibname ext2fs 2
 %define	devname	%mklibname ext2fs -d
 %define devnameold %{mklibname ext2fs 2}-devel
@@ -95,10 +94,14 @@ autoconf
 chmod 644 po/*.po
 
 %build
-%configure2_5x --enable-elf-shlibs --disable-libblkid --disable-libuuid \
-	--disable-fsck --disable-uuidd --enable-symlink-install
+%configure2_5x	--enable-elf-shlibs \
+		--disable-libblkid \
+		--disable-libuuid \
+		--disable-fsck \
+		--disable-uuidd \
+		--enable-symlink-install
 %make
-make -C e2fsck e2fsck.static
+%make -C e2fsck e2fsck.static
 
 %check
 LC_ALL=C make check
