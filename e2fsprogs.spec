@@ -230,5 +230,6 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %dir %{multiarch_includedir}/ext2fs
 %{multiarch_includedir}/ext2fs/ext2_types.h
 %{_includedir}/ss
+%dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
 %{_mandir}/man3/com_err.3*
