@@ -1,5 +1,3 @@
-%define _default_patch_fuzz        2
-
 %define url http://prdownloads.sourceforge.net/e2fsprogs
 %define	_root_sbindir	/sbin
 %define	_root_libdir	/%_lib
@@ -9,23 +7,22 @@
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-Name: e2fsprogs
-Version: 1.41.14
-Release: %manbo_mkrel 2
-Summary: Utilities used for ext2/ext3/ext4 filesystems
-License: GPL
-Group: System/Kernel and hardware
-Source0: http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
-Source1: e3jsize
+Name:		e2fsprogs
+Version:	1.41.14
+Release:	3
+Summary:	Utilities used for ext2/ext3/ext4 filesystems
+License:	GPL
+Group:		System/Kernel and hardware
+Source0:	http://osdn.dl.sourceforge.net/e2fsprogs/e2fsprogs-%{version}.tar.gz
+Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
-Patch0: e2fsprogs-1.41.8-uninitialized.patch
+Patch0:		e2fsprogs-1.41.8-uninitialized.patch
 # (gb) strip references to home build dir
-Patch5: e2fsprogs-1.41.8-strip-me.patch
+Patch5:		e2fsprogs-1.41.8-strip-me.patch
 
-Url: http://e2fsprogs.sourceforge.net/
-Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires:	texinfo, autoconf
+Url:		http://e2fsprogs.sourceforge.net/
+BuildRequires:	texinfo autoconf
 BuildRequires:	libblkid-devel
 BuildRequires:	libuuid-devel
 
@@ -41,12 +38,12 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
-%package -n %libname
-Summary: The libraries for Ext2fs
-Group: System/Libraries
-Requires: e2fsprogs
+%package -n	%{libname}
+Summary:	The libraries for Ext2fs
+Group:		System/Libraries
+Requires:	e2fsprogs
 
-%description -n %libname
+%description -n %{libname}
 The e2fsprogs package contains a number of utilities for creating,
 checking, modifying and correcting any inconsistencies in ext2, ext3,
 and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
@@ -60,18 +57,18 @@ utilities.
 
 This package contains the shared libraries.
 
-%package -n %{devname}
-Summary: The libraries for Ext2fs
-Group: Development/C
-Requires:  %{libname} = %{version}-%{release}
-Obsoletes: %{name}-devel < %{version}-%{release}
-Obsoletes: %{devnameold}
-Provides:  %{name}-devel = %{version}-%{release}
-Provides:  libext2fs-devel = %{version}-%{release}
-Provides:  libe2fsprogs-devel = %{version}-%{release}
-Provides:  ext2fs-devel = %{version}-%{release}
+%package -n	%{devname}
+Summary:	The libraries for Ext2fs
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Obsoletes:	%{name}-devel < %{version}-%{release}
+Obsoletes:	%{devnameold}
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	libext2fs-devel = %{version}-%{release}
+Provides:	libe2fsprogs-devel = %{version}-%{release}
+Provides:	ext2fs-devel = %{version}-%{release}
 
-%description -n %{devname}
+%description -n	%{devname}
 The e2fsprogs package contains a number of utilities for creating,
 checking, modifying and correcting any inconsistencies in ext2, ext3,
 and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
@@ -107,43 +104,32 @@ make -C e2fsck e2fsck.static
 LC_ALL=C make check
 
 %install
-rm -rf %{buildroot}
 export PATH=/sbin:$PATH
 
 %makeinstall_std install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
 for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
-	ln -s $i %{buildroot}/%_root_libdir/${i%.[0-9]}
+	ln -s $i %{buildroot}%{_root_libdir}/${i%.[0-9]}
 done
 
-rm -f	%{buildroot}%_libdir/libss.a \
-	%{buildroot}/%{_root_libdir}/libcom_err.so \
-	%{buildroot}/%{_root_libdir}/libe2p.so \
-	%{buildroot}/%{_root_libdir}/libext2fs.so \
-	%{buildroot}/%{_root_libdir}/libss.so
+rm -f	%{buildroot}%{_libdir}/libss.a \
+	%{buildroot}%{_root_libdir}/libcom_err.so \
+	%{buildroot}%{_root_libdir}/libe2p.so \
+	%{buildroot}%{_root_libdir}/libext2fs.so \
+	%{buildroot}%{_root_libdir}/libss.so
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
 
 %find_lang %{name}
 
-chmod +x %{buildroot}%_bindir/{mk_cmds,compile_et}
+chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
 
 install -m 755 e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
 ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 	%{buildroot}%{_root_sbindir}/mke3fs
-
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
 
 %post -n %{devname}
 %_install_info libext2fs.info
@@ -151,103 +137,98 @@ rm -rf %{buildroot}
 %preun -n %{devname}
 %_remove_install_info libext2fs.info
 
-
-%files -f %name.lang
-%defattr(-,root,root)
+%files -f %{name}.lang
 %doc README
-%_root_sbindir/badblocks
-%_root_sbindir/debugfs
-%_root_sbindir/dumpe2fs
-%_root_sbindir/e2fsck
-%_root_sbindir/e2fsck.static
-%_root_sbindir/e2image
-%_root_sbindir/e2label
-%_root_sbindir/e2undo
-%_root_sbindir/e3jsize
-%_root_sbindir/fsck.ext2
-%_root_sbindir/fsck.ext3
-%_root_sbindir/fsck.ext4
-%_root_sbindir/fsck.ext4dev
-%_root_sbindir/logsave
-%_root_sbindir/mke2fs
-%_root_sbindir/mke3fs
-%_root_sbindir/mkfs.ext2
-%_root_sbindir/mkfs.ext3
-%_root_sbindir/mkfs.ext4
-%_root_sbindir/mkfs.ext4dev
-%_root_sbindir/resize2fs
-%_root_sbindir/tune2fs
+%{_root_sbindir}/badblocks
+%{_root_sbindir}/debugfs
+%{_root_sbindir}/dumpe2fs
+%{_root_sbindir}/e2fsck
+%{_root_sbindir}/e2fsck.static
+%{_root_sbindir}/e2image
+%{_root_sbindir}/e2label
+%{_root_sbindir}/e2undo
+%{_root_sbindir}/e3jsize
+%{_root_sbindir}/fsck.ext2
+%{_root_sbindir}/fsck.ext3
+%{_root_sbindir}/fsck.ext4
+%{_root_sbindir}/fsck.ext4dev
+%{_root_sbindir}/logsave
+%{_root_sbindir}/mke2fs
+%{_root_sbindir}/mke3fs
+%{_root_sbindir}/mkfs.ext2
+%{_root_sbindir}/mkfs.ext3
+%{_root_sbindir}/mkfs.ext4
+%{_root_sbindir}/mkfs.ext4dev
+%{_root_sbindir}/resize2fs
+%{_root_sbindir}/tune2fs
 # FIXME: why isn't this marked %config(noreplace)?
-%_sysconfdir/*.conf
+%{_sysconfdir}/*.conf
 
 
-%_bindir/chattr
-%_bindir/lsattr
-%_mandir/man1/chattr.1*
-%_mandir/man1/lsattr.1*
-%_mandir/man5/e2fsck.conf.5*
-%_mandir/man5/mke2fs.conf.5*
-%_mandir/man8/badblocks.8*
-%_mandir/man8/debugfs.8*
-%_mandir/man8/dumpe2fs.8*
-%_mandir/man8/e2freefrag.8*
-%_mandir/man8/e2fsck.8*
-%_mandir/man8/e2image.8*
-%_mandir/man8/e2label.8*
-%_mandir/man8/e2undo.8.*
-%_mandir/man8/filefrag.8*
-%_mandir/man8/fsck.ext2.8*
-%_mandir/man8/fsck.ext3.8*
-%_mandir/man8/fsck.ext4.8.*
-%_mandir/man8/fsck.ext4dev.8.*
-%_mandir/man8/logsave.8*
-%_mandir/man8/mke2fs.8*
-%_mandir/man8/mkfs.ext2.8*
-%_mandir/man8/mkfs.ext3.8*
-%_mandir/man8/mkfs.ext4.8.*
-%_mandir/man8/mkfs.ext4dev.8.*
-%_mandir/man8/mklost+found.8*
-%_mandir/man8/resize2fs.8*
-%_mandir/man8/tune2fs.8*
-%_sbindir/e2freefrag
-%_sbindir/filefrag
-%_sbindir/mklost+found
+%{_bindir}/chattr
+%{_bindir}/lsattr
+%{_mandir}/man1/chattr.1*
+%{_mandir}/man1/lsattr.1*
+%{_mandir}/man5/e2fsck.conf.5*
+%{_mandir}/man5/mke2fs.conf.5*
+%{_mandir}/man8/badblocks.8*
+%{_mandir}/man8/debugfs.8*
+%{_mandir}/man8/dumpe2fs.8*
+%{_mandir}/man8/e2freefrag.8*
+%{_mandir}/man8/e2fsck.8*
+%{_mandir}/man8/e2image.8*
+%{_mandir}/man8/e2label.8*
+%{_mandir}/man8/e2undo.8.*
+%{_mandir}/man8/filefrag.8*
+%{_mandir}/man8/fsck.ext2.8*
+%{_mandir}/man8/fsck.ext3.8*
+%{_mandir}/man8/fsck.ext4.8.*
+%{_mandir}/man8/fsck.ext4dev.8.*
+%{_mandir}/man8/logsave.8*
+%{_mandir}/man8/mke2fs.8*
+%{_mandir}/man8/mkfs.ext2.8*
+%{_mandir}/man8/mkfs.ext3.8*
+%{_mandir}/man8/mkfs.ext4.8.*
+%{_mandir}/man8/mkfs.ext4dev.8.*
+%{_mandir}/man8/mklost+found.8*
+%{_mandir}/man8/resize2fs.8*
+%{_mandir}/man8/tune2fs.8*
+%{_sbindir}/e2freefrag
+%{_sbindir}/filefrag
+%{_sbindir}/mklost+found
 
 %files -n %libname
-%defattr(-,root,root)
 %doc README
-%_root_libdir/libcom_err.so.*
-%_root_libdir/libe2p.so.*
-%_root_libdir/libext2fs.so.*
-%_root_libdir/libss.so.*
+%{_root_libdir}/libcom_err.so.*
+%{_root_libdir}/libe2p.so.*
+%{_root_libdir}/libext2fs.so.*
+%{_root_libdir}/libss.so.*
 
-%_libdir/e2initrd_helper
+%{_libdir}/e2initrd_helper
 
 %files -n %{devname}
-%defattr(-,root,root,755)
 %doc RELEASE-NOTES
-%_infodir/libext2fs.info*
-%_bindir/compile_et
-%_mandir/man1/compile_et.1*
-%_bindir/mk_cmds
-%_mandir/man1/mk_cmds.1*
-%_libdir/pkgconfig/*
+%{_infodir}/libext2fs.info*
+%{_bindir}/compile_et
+%{_mandir}/man1/compile_et.1*
+%{_bindir}/mk_cmds
+%{_mandir}/man1/mk_cmds.1*
+%{_libdir}/pkgconfig/*
 
-%_libdir/libcom_err.so
-%_libdir/libe2p.a
-%_libdir/libe2p.so
-%_libdir/libext2fs.a
-%_libdir/libext2fs.so
-%_libdir/libcom_err.a
-%_libdir/libss.so
+%{_libdir}/libcom_err.so
+%{_libdir}/libe2p.a
+%{_libdir}/libe2p.so
+%{_libdir}/libext2fs.a
+%{_libdir}/libext2fs.so
+%{_libdir}/libcom_err.a
+%{_libdir}/libss.so
 
-%_datadir/et
-%_datadir/ss
-%_includedir/et
-%_includedir/ext2fs
-%dir %multiarch_includedir/ext2fs
-%multiarch_includedir/ext2fs/ext2_types.h
-%_includedir/ss
-%_includedir/e2p/e2p.h
-%_mandir/man3/com_err.3*
-
+%{_datadir}/et
+%{_datadir}/ss
+%{_includedir}/et
+%{_includedir}/ext2fs
+%dir %{multiarch_includedir}/ext2fs
+%{multiarch_includedir}/ext2fs/ext2_types.h
+%{_includedir}/ss
+%{_includedir}/e2p/e2p.h
+%{_mandir}/man3/com_err.3*
