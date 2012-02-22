@@ -7,12 +7,12 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name:		e2fsprogs
-Version:	1.42
+Version:	1.42.1
 Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
-Source0:	http://osdn.dl.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-%version.tar.gz
 Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
