@@ -7,7 +7,7 @@
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Name:		e2fsprogs
-Version:	1.42.1
+Version:	1.42.2
 Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
@@ -127,12 +127,6 @@ install -m 755 e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
 ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 	%{buildroot}%{_root_sbindir}/mke3fs
-
-%post -n %{devname}
-%_install_info libext2fs.info
-
-%preun -n %{devname}
-%_remove_install_info libext2fs.info
 
 %files -f %{name}.lang
 %doc README
