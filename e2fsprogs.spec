@@ -6,9 +6,11 @@
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
+%bcond_without	uclibc
+
 Name:		e2fsprogs
 Version:	1.42.5
-Release:	1
+Release:	2
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -24,8 +26,27 @@ Url:		http://e2fsprogs.sourceforge.net/
 BuildRequires:	texinfo autoconf
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-10
+%endif
 
 %description
+The e2fsprogs package contains a number of utilities for creating,
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
+filesystem inconsistencies after an unclean shutdown), mke2fs (used to
+initialize a partition to contain an empty ext2 filesystem), debugfs
+(used to examine the internal structure of a filesystem, to manually
+repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
+
+%package -n	uclibc-%{name}
+Summary:	Utilities used for ext2/ext3/ext4 filesystems (uClibc linked)
+Group:		System/Kernel and hardware
+
+%description -n	uclibc-%{name}
 The e2fsprogs package contains a number of utilities for creating,
 checking, modifying and correcting any inconsistencies in ext2, ext3,
 and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
@@ -55,10 +76,29 @@ utilities.
 
 This package contains the shared libraries.
 
+%package -n	uclibc-%{libname}
+Summary:	The libraries for Ext2fs (uClibc linked)
+Group:		System/Libraries
+
+%description -n uclibc-%{libname}
+The e2fsprogs package contains a number of utilities for creating,
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
+filesystem inconsistencies after an unclean shutdown), mke2fs (used to
+initialize a partition to contain an empty ext2 filesystem), debugfs
+(used to examine the internal structure of a filesystem, to manually
+repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
+
 %package -n	%{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
+%if %{with uclibc}
+Requires:	uclibc-%{libname} = %{EVRD}
+%endif
 Provides:	ext2fs-devel = %{EVRD}
 
 %description -n	%{devname}
@@ -88,6 +128,26 @@ autoconf
 chmod 644 po/*.po
 
 %build
+export CONFIGURE_TOP="$PWD"
+
+%if %{with uclibc}
+mkdir -p uclibc
+pushd uclibc
+%configure2_5x	CC=%{uclibc_cc} \
+		CFLAGS="%{uclibc_cflags}" \
+		--enable-elf-shlibs \
+		--disable-libblkid \
+		--disable-libuuid \
+		--disable-fsck \
+		--disable-uuidd \
+		--enable-symlink-install
+%make
+%make -C e2fsck
+popd
+%endif
+
+mkdir -p system
+pushd system
 %configure2_5x	--enable-elf-shlibs \
 		--disable-libblkid \
 		--disable-libuuid \
@@ -96,19 +156,32 @@ chmod 644 po/*.po
 		--enable-symlink-install
 %make
 %make -C e2fsck e2fsck.static
+popd
 
 %check
-LC_ALL=C make check
+LC_ALL=C make -C system check
 
 %install
 export PATH=/sbin:$PATH
 
-%makeinstall_std install-libs \
+%if %{with uclibc}
+%makeinstall_std -C uclibc install-libs \
+		root_sbindir=%{uclibc_root}/sbin \
+		root_libdir=%{uclibc_root}/%{_lib}
+
+install -d %{buildroot}%{uclibc_root}%{_libdir}
+for i in %{buildroot}%{uclibc_root}/%{_lib}/lib*.so.%{major}.*; do
+	name="`basename $i| sed -e 's/\.so.*/.so/g'`"
+	ln -rs $i %{buildroot}%{uclibc_root}%{_libdir}/$name
+done
+%endif
+
+%makeinstall_std -C system install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
-for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
-	ln -s $i %{buildroot}%{_root_libdir}/${i%.[0-9]}
-done
+#for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
+#	ln -s $i %{buildroot}%{_root_libdir}/`basename $i| sed -e 's/\.so.*/.so/g`
+#done
 
 rm -f	%{buildroot}%{_libdir}/libss.a \
 	%{buildroot}%{_root_libdir}/libcom_err.so \
@@ -123,7 +196,7 @@ rm -f	%{buildroot}%{_libdir}/libss.a \
 
 chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
 
-install -m 755 e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
+install -m 755 system/e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
 ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 	%{buildroot}%{_root_sbindir}/mke3fs
@@ -189,6 +262,29 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
 
+%if %{with uclibc}
+%files -n uclibc-%{name}
+%{uclibc_root}/sbin/badblocks
+%{uclibc_root}/sbin/debugfs
+%{uclibc_root}/sbin/dumpe2fs
+%{uclibc_root}/sbin/e2fsck
+%{uclibc_root}/sbin/e2image
+%{uclibc_root}/sbin/e2label
+%{uclibc_root}/sbin/e2undo
+%{uclibc_root}/sbin/fsck.ext2
+%{uclibc_root}/sbin/fsck.ext3
+%{uclibc_root}/sbin/fsck.ext4
+%{uclibc_root}/sbin/fsck.ext4dev
+%{uclibc_root}/sbin/logsave
+%{uclibc_root}/sbin/mke2fs
+%{uclibc_root}/sbin/mkfs.ext2
+%{uclibc_root}/sbin/mkfs.ext3
+%{uclibc_root}/sbin/mkfs.ext4
+%{uclibc_root}/sbin/mkfs.ext4dev
+%{uclibc_root}/sbin/resize2fs
+%{uclibc_root}/sbin/tune2fs
+%endif
+
 %files -n %{libname}
 %doc README
 %{_root_libdir}/libcom_err.so.%{major}*
@@ -197,6 +293,15 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_root_libdir}/libss.so.%{major}*
 
 %{_libdir}/e2initrd_helper
+
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%doc README
+%{uclibc_root}/%{_lib}/libcom_err.so.%{major}*
+%{uclibc_root}/%{_lib}/libe2p.so.%{major}*
+%{uclibc_root}/%{_lib}/libext2fs.so.%{major}*
+%{uclibc_root}/%{_lib}/libss.so.%{major}*
+%endif
 
 %files -n %{devname}
 %doc RELEASE-NOTES
@@ -215,6 +320,13 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_libdir}/libcom_err.a
 %{_libdir}/libquota.a
 %{_libdir}/libss.so
+
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libcom_err.so
+%{uclibc_root}%{_libdir}/libe2p.so
+%{uclibc_root}%{_libdir}/libext2fs.so
+%{uclibc_root}%{_libdir}/libss.so
+%endif
 
 %{_datadir}/et
 %{_datadir}/ss
