@@ -9,8 +9,8 @@
 %bcond_without	uclibc
 
 Name:		e2fsprogs
-Version:	1.42.5
-Release:	2
+Version:	1.42.6
+Release:	1
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
