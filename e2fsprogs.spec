@@ -10,7 +10,7 @@
 
 Name:		e2fsprogs
 Version:	1.42.6
-Release:	3
+Release:	4
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -167,21 +167,15 @@ export PATH=/sbin:$PATH
 %makeinstall_std -C uclibc install-libs \
 		root_sbindir=%{uclibc_root}/sbin \
 		root_libdir=%{uclibc_root}/%{_lib}
-chmod u+w -R %{buildroot}
 rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
 for bin in chattr compile_et lsattr mk_cmds; do
 	rm %{buildroot}%{uclibc_root}%{_bindir}/$bin
 done
 rm %{buildroot}%{uclibc_root}%{_libexecdir}/e2initrd_helper
-rm %{buildroot}%{uclibc_root}%{_libdir}/libss.a
-
 %endif
 
 %makeinstall_std -C system install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
-chmod u+w -R %{buildroot}
-
-rm 	%{buildroot}%{_libdir}/libss.a
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
@@ -194,6 +188,9 @@ install -m 755 system/e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
 ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 	%{buildroot}%{_root_sbindir}/mke3fs
+
+# fix some files not having write permission by user
+chmod u+w -R %{buildroot}
 
 %files -f %{name}.lang
 %doc README
@@ -317,6 +314,7 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{_libdir}/libext2fs.so
 %{_libdir}/libcom_err.a
 %{_libdir}/libquota.a
+%{_libdir}/libss.a
 %{_libdir}/libss.so
 
 %if %{with uclibc}
@@ -327,6 +325,7 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{uclibc_root}%{_libdir}/libext2fs.so
 %{uclibc_root}%{_libdir}/libcom_err.a
 %{uclibc_root}%{_libdir}/libquota.a
+%{uclibc_root}%{_libdir}/libss.a
 %{uclibc_root}%{_libdir}/libss.so
 %endif
 
