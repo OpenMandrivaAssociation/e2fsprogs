@@ -140,7 +140,8 @@ pushd uclibc
 		--disable-libuuid \
 		--disable-fsck \
 		--disable-uuidd \
-		--enable-symlink-install
+		--enable-symlink-install \
+		--disable-e2initrd-helper
 %make
 %make -C e2fsck
 popd
@@ -172,7 +173,6 @@ rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
 for bin in chattr compile_et lsattr mk_cmds; do
 	rm %{buildroot}%{uclibc_root}%{_bindir}/$bin
 done
-rm %{buildroot}%{uclibc_root}%{_libexecdir}/e2initrd_helper
 %endif
 
 %makeinstall_std -C system install-libs \
