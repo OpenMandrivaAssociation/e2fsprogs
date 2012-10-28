@@ -27,7 +27,7 @@ BuildRequires:	texinfo autoconf
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
 %if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-10
+BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
 
 %description
@@ -133,8 +133,7 @@ export CONFIGURE_TOP="$PWD"
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
-%configure2_5x	CC=%{uclibc_cc} \
-		CFLAGS="%{uclibc_cflags}" \
+%uclibc_configure \
 		--enable-elf-shlibs \
 		--disable-libblkid \
 		--disable-libuuid \
@@ -168,26 +167,21 @@ export PATH=/sbin:$PATH
 %makeinstall_std -C uclibc install-libs \
 		root_sbindir=%{uclibc_root}/sbin \
 		root_libdir=%{uclibc_root}/%{_lib}
-
-install -d %{buildroot}%{uclibc_root}%{_libdir}
-for i in %{buildroot}%{uclibc_root}/%{_lib}/lib*.so.%{major}.*; do
-	name="`basename $i| sed -e 's/\.so.*/.so/g'`"
-	ln -rs $i %{buildroot}%{uclibc_root}%{_libdir}/$name
+chmod u+w -R %{buildroot}
+rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
+for bin in chattr compile_et lsattr mk_cmds; do
+	rm %{buildroot}%{uclibc_root}%{_bindir}/$bin
 done
+rm %{buildroot}%{uclibc_root}%{_libexecdir}/e2initrd_helper
+rm %{buildroot}%{uclibc_root}%{_libdir}/libss.a
+
 %endif
 
 %makeinstall_std -C system install-libs \
 	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
+chmod u+w -R %{buildroot}
 
-#for i in libcom_err.so.2 libe2p.so.2 libext2fs.so.2 libss.so.2; do
-#	ln -s $i %{buildroot}%{_root_libdir}/`basename $i| sed -e 's/\.so.*/.so/g`
-#done
-
-rm -f	%{buildroot}%{_libdir}/libss.a \
-	%{buildroot}%{_root_libdir}/libcom_err.so \
-	%{buildroot}%{_root_libdir}/libe2p.so \
-	%{buildroot}%{_root_libdir}/libext2fs.so \
-	%{buildroot}%{_root_libdir}/libss.so
+rm 	%{buildroot}%{_libdir}/libss.a
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
@@ -283,6 +277,10 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 %{uclibc_root}/sbin/mkfs.ext4dev
 %{uclibc_root}/sbin/resize2fs
 %{uclibc_root}/sbin/tune2fs
+%{uclibc_root}%{_sbindir}/e2freefrag
+%{uclibc_root}%{_sbindir}/e4defrag
+%{uclibc_root}%{_sbindir}/filefrag
+%{uclibc_root}%{_sbindir}/mklost+found
 %endif
 
 %files -n %{libname}
@@ -323,8 +321,12 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 
 %if %{with uclibc}
 %{uclibc_root}%{_libdir}/libcom_err.so
+%{uclibc_root}%{_libdir}/libe2p.a
 %{uclibc_root}%{_libdir}/libe2p.so
+%{uclibc_root}%{_libdir}/libext2fs.a
 %{uclibc_root}%{_libdir}/libext2fs.so
+%{uclibc_root}%{_libdir}/libcom_err.a
+%{uclibc_root}%{_libdir}/libquota.a
 %{uclibc_root}%{_libdir}/libss.so
 %endif
 
