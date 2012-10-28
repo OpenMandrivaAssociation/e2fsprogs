@@ -29,6 +29,7 @@ BuildRequires:	pkgconfig(uuid)
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-16
 %endif
+Conflicts:	e2fsprogs < 1.42.6-4
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -217,7 +218,7 @@ chmod u+w -R %{buildroot}
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
-
+%{_libexecdir}/e2initrd_helper
 
 %{_bindir}/chattr
 %{_bindir}/lsattr
@@ -286,8 +287,6 @@ chmod u+w -R %{buildroot}
 %{_root_libdir}/libe2p.so.%{major}*
 %{_root_libdir}/libext2fs.so.%{major}*
 %{_root_libdir}/libss.so.%{major}*
-
-%{_libdir}/e2initrd_helper
 
 %if %{with uclibc}
 %files -n uclibc-%{libname}
