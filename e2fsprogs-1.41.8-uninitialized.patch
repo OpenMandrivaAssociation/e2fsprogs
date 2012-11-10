@@ -1,0 +1,12 @@
+Index: e2fsprogs-1.41.8/lib/ss/invocation.c
+===================================================================
+--- e2fsprogs-1.41.8/lib/ss/invocation.c
++++ e2fsprogs-1.41.8/lib/ss/invocation.c	2009-07-15 23:26:20.000000000 +0300
+@@ -75,6 +75,7 @@
+ 	new_table->add_history = 0;
+ 	new_table->redisplay = 0;
+ 	new_table->rl_completion_matches = 0;
++	new_table->readline_shutdown = 0;
+ 	_ss_table = table;
+ #if defined(HAVE_DLOPEN) && defined(SHARED_ELF_LIB)
+ 	ss_get_readline(sci_idx);
