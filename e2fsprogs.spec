@@ -341,3 +341,93 @@ chmod u+w -R %{buildroot}
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
 %{_mandir}/man3/com_err.3*
+
+%changelog
+* Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-5
+- rebuild on ABF
+
+* Sun Oct 28 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-4
++ Revision: 820160
+- just pass --disable-e2initrd-helper to configure for uclibc build so we won't
+  have to manually delete it later ourself
+- move e2initrd_helper to main package from library package
+- don't remove libss.a
+- fix uClibc build's file list
+
+* Tue Oct 16 2012 Tomasz Pawel Gajc <tpg@mandriva.org> 1.42.6-3
++ Revision: 818938
+- reupload
+
+* Tue Oct 16 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-2
++ Revision: 818883
+- rebuild to get uclibc deps right
+
+* Sun Oct 07 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.6-1
++ Revision: 818670
+- version update 1.42.6
+
+  + Per Øyvind Karlsen <peroyvind@mandriva.org>
+    - try skipping %%check entirely..
+    - don't let check suite which fails on build system break build
+    - do uClibc build
+
+* Thu Aug 16 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.5-1
++ Revision: 814981
+- version update 1.42.5
+
+* Thu Jun 14 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.4-1
++ Revision: 805664
+- version update 1.42.4
+
+* Tue May 15 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.3-1
++ Revision: 799022
+- Update to 1.42.3
+
+* Wed Mar 28 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.2-1
++ Revision: 788040
+- Update to 1.42.2
+- Adapt spec file to current rpm macros
+
+* Wed Feb 22 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.1-1
++ Revision: 779240
+- Upate to 1.42.1
+
+* Fri Dec 23 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42-1
++ Revision: 744672
+- use %%{EVRD} macro
+- drop excessive provides and ancient obsoletes
+- make config file %%config(noreplace)
+- library package shouldn't depend on e2fsprogs
+- use pkgconfig() dependencies
+- specify gpl version
+- new version!
+- be sure to own %%{_includedir}/e2p
+- cleanups!
+
+* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 1.41.14-2
++ Revision: 661660
+- multiarch fixes
+
+* Thu Dec 23 2010 Funda Wang <fwang@mandriva.org> 1.41.14-1mnb2
++ Revision: 624064
+- new version 1.41.14
+- new version 1.41.13
+- use symbolic link rather than hardlink
+
+* Fri Jun 11 2010 Thomas Backlund <tmb@mandriva.org> 1.41.12-1mnb2
++ Revision: 547931
+- update to 1.41.12 (bugfix release)
+
+* Tue Mar 16 2010 Funda Wang <fwang@mandriva.org> 1.41.11-1mnb2
++ Revision: 522506
+- New version 1.41.11
+
+* Sat Feb 27 2010 Thomas Backlund <tmb@mandriva.org> 1.41.10-2mnb2
++ Revision: 512296
+- rebuild against new libblkid)
+
+* Thu Feb 11 2010 Frederik Himpe <fhimpe@mandriva.org> 1.41.10-1mnb2
++ Revision: 504356
+- Update to new version 1.41.10
+- Does not ship with a default e2fsck.conf anymore
+
