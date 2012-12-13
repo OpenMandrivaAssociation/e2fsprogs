@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ -z "$1" ]
+then
+  echo Specify a device.
+  exit 1
+fi
+
+inode=`dumpe2fs $1 2> /dev/null | grep "Journal inode:" | \
+ sed -e 's/^.*\([0-9][0-9]*\).*$/\1/' `
+
+if [ -z "$inode" ]
+then
+  echo $1 does not have a journal inode.
+  exit 1
+fi
+
+echo "stat <$inode>" | debugfs $1 2> /dev/null | grep "User:.*Size:" | sed 's/^.*Size:[^0-9]*\([0-9][0-9]*\).*$/\1/'
+
