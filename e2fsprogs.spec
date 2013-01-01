@@ -62,6 +62,7 @@ utilities.
 %package -n	%{libname}
 Summary:	The libraries for Ext2fs
 Group:		System/Libraries
+Conflicts:	%{_lib}ext2fs2 < 1.42.6-5
 
 %description -n %{libname}
 The e2fsprogs package contains a number of utilities for creating,
