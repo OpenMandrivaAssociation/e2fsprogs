@@ -10,7 +10,7 @@
 
 Name:		e2fsprogs
 Version:	1.42.6
-Release:	5
+Release:	6
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -132,6 +132,9 @@ chmod 644 po/*.po
 %build
 export CONFIGURE_TOP="$PWD"
 
+%ifarch %{ix86}
+%global ldflags %{ldflags} -fuse-ld=bfd
+%endif
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
