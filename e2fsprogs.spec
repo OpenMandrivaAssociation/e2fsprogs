@@ -8,12 +8,13 @@
 
 %bcond_without	uclibc
 
+Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.42.6
 Release:	6
-Summary:	Utilities used for ext2/ext3/ext4 filesystems
 License:	GPLv2
 Group:		System/Kernel and hardware
+Url:		http://e2fsprogs.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
 Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
@@ -22,8 +23,7 @@ Patch0:		e2fsprogs-1.41.8-uninitialized.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
 
-Url:		http://e2fsprogs.sourceforge.net/
-BuildRequires:	texinfo autoconf
+BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
 %if %{with uclibc}
@@ -120,8 +120,7 @@ features.
 
 %prep
 %setup -q
-%patch0 -p1 -b .uninit
-%patch5 -p1 -b .strip-me
+%apply_patches
 
 rm -f configure
 autoconf
@@ -139,13 +138,14 @@ export CONFIGURE_TOP="$PWD"
 mkdir -p uclibc
 pushd uclibc
 %uclibc_configure \
-		--enable-elf-shlibs \
-		--disable-libblkid \
-		--disable-libuuid \
-		--disable-fsck \
-		--disable-uuidd \
-		--enable-symlink-install \
-		--disable-e2initrd-helper
+	--enable-elf-shlibs \
+	--disable-libblkid \
+	--disable-libuuid \
+	--disable-fsck \
+	--disable-uuidd \
+	--enable-symlink-install \
+	--disable-e2initrd-helper
+
 %make
 %make -C e2fsck
 popd
@@ -153,12 +153,13 @@ popd
 
 mkdir -p system
 pushd system
-%configure2_5x	--enable-elf-shlibs \
-		--disable-libblkid \
-		--disable-libuuid \
-		--disable-fsck \
-		--disable-uuidd \
-		--enable-symlink-install
+%configure2_5x \
+	--enable-elf-shlibs \
+	--disable-libblkid \
+	--disable-libuuid \
+	--disable-fsck \
+	--disable-uuidd \
+	--enable-symlink-install
 %make
 %make -C e2fsck e2fsck.static
 popd
@@ -170,17 +171,20 @@ popd
 export PATH=/sbin:$PATH
 
 %if %{with uclibc}
-%makeinstall_std -C uclibc install-libs \
-		root_sbindir=%{uclibc_root}/sbin \
-		root_libdir=%{uclibc_root}/%{_lib}
+%makeinstall_std -C \
+	uclibc install-libs \
+	root_sbindir=%{uclibc_root}/sbin \
+	root_libdir=%{uclibc_root}/%{_lib}
 rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
 for bin in chattr compile_et lsattr mk_cmds; do
 	rm %{buildroot}%{uclibc_root}%{_bindir}/$bin
 done
 %endif
 
-%makeinstall_std -C system install-libs \
-	root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
+%makeinstall_std -C \
+	system install-libs \
+	root_sbindir=%{_root_sbindir} \
+	root_libdir=%{_root_libdir}
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
@@ -345,93 +349,4 @@ chmod u+w -R %{buildroot}
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
 %{_mandir}/man3/com_err.3*
-
-%changelog
-* Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-5
-- rebuild on ABF
-
-* Sun Oct 28 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-4
-+ Revision: 820160
-- just pass --disable-e2initrd-helper to configure for uclibc build so we won't
-  have to manually delete it later ourself
-- move e2initrd_helper to main package from library package
-- don't remove libss.a
-- fix uClibc build's file list
-
-* Tue Oct 16 2012 Tomasz Pawel Gajc <tpg@mandriva.org> 1.42.6-3
-+ Revision: 818938
-- reupload
-
-* Tue Oct 16 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42.6-2
-+ Revision: 818883
-- rebuild to get uclibc deps right
-
-* Sun Oct 07 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.6-1
-+ Revision: 818670
-- version update 1.42.6
-
-  + Per Øyvind Karlsen <peroyvind@mandriva.org>
-    - try skipping %%check entirely..
-    - don't let check suite which fails on build system break build
-    - do uClibc build
-
-* Thu Aug 16 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.5-1
-+ Revision: 814981
-- version update 1.42.5
-
-* Thu Jun 14 2012 Alexander Khrukin <akhrukin@mandriva.org> 1.42.4-1
-+ Revision: 805664
-- version update 1.42.4
-
-* Tue May 15 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.3-1
-+ Revision: 799022
-- Update to 1.42.3
-
-* Wed Mar 28 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.2-1
-+ Revision: 788040
-- Update to 1.42.2
-- Adapt spec file to current rpm macros
-
-* Wed Feb 22 2012 Bernhard Rosenkraenzer <bero@bero.eu> 1.42.1-1
-+ Revision: 779240
-- Upate to 1.42.1
-
-* Fri Dec 23 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.42-1
-+ Revision: 744672
-- use %%{EVRD} macro
-- drop excessive provides and ancient obsoletes
-- make config file %%config(noreplace)
-- library package shouldn't depend on e2fsprogs
-- use pkgconfig() dependencies
-- specify gpl version
-- new version!
-- be sure to own %%{_includedir}/e2p
-- cleanups!
-
-* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 1.41.14-2
-+ Revision: 661660
-- multiarch fixes
-
-* Thu Dec 23 2010 Funda Wang <fwang@mandriva.org> 1.41.14-1mnb2
-+ Revision: 624064
-- new version 1.41.14
-- new version 1.41.13
-- use symbolic link rather than hardlink
-
-* Fri Jun 11 2010 Thomas Backlund <tmb@mandriva.org> 1.41.12-1mnb2
-+ Revision: 547931
-- update to 1.41.12 (bugfix release)
-
-* Tue Mar 16 2010 Funda Wang <fwang@mandriva.org> 1.41.11-1mnb2
-+ Revision: 522506
-- New version 1.41.11
-
-* Sat Feb 27 2010 Thomas Backlund <tmb@mandriva.org> 1.41.10-2mnb2
-+ Revision: 512296
-- rebuild against new libblkid)
-
-* Thu Feb 11 2010 Frederik Himpe <fhimpe@mandriva.org> 1.41.10-1mnb2
-+ Revision: 504356
-- Update to new version 1.41.10
-- Does not ship with a default e2fsck.conf anymore
 
