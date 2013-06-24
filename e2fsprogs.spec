@@ -137,6 +137,8 @@ export CONFIGURE_TOP="$PWD"
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
+uname -a
+cat >uclibc-build.sh <<"EOF"
 %uclibc_configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
@@ -148,6 +150,14 @@ pushd uclibc
 
 %make
 %make -C e2fsck
+EOF
+chmod +x uclibc-build.sh
+%ifarch %ix86
+# Workaround for ABF builds running in 64bit environments
+linux32 ./uclibc-build.sh
+%else
+./uclibc-build.sh
+%endif
 popd
 %endif
 
@@ -200,6 +210,9 @@ ln -f %{buildroot}%{_root_sbindir}/mke2fs \
 
 # fix some files not having write permission by user
 chmod u+w -R %{buildroot}
+
+# This should be owned by glibc, not util-linux
+rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 
 %files -f %{name}.lang
 %doc README
