@@ -137,27 +137,20 @@ export CONFIGURE_TOP="$PWD"
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
-uname -a
-cat >uclibc-build.sh <<"EOF"
-%uclibc_configure \
+if ! %uclibc_configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
 	--disable-libuuid \
 	--disable-fsck \
 	--disable-uuidd \
 	--enable-symlink-install \
-	--disable-e2initrd-helper
+	--disable-e2initrd-helper; then
+	cat config.log
+	exit 123
+fi
 
 %make
 %make -C e2fsck
-EOF
-chmod +x uclibc-build.sh
-%ifarch %ix86
-# Workaround for ABF builds running in 64bit environments
-linux32 ./uclibc-build.sh
-%else
-./uclibc-build.sh
-%endif
 popd
 %endif
 
