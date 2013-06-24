@@ -137,17 +137,15 @@ export CONFIGURE_TOP="$PWD"
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
-if ! %uclibc_configure \
+%uclibc_configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
 	--disable-libuuid \
 	--disable-fsck \
 	--disable-uuidd \
 	--enable-symlink-install \
-	--disable-e2initrd-helper; then
-	cat config.log
-	exit 123
-fi
+	--disable-e2initrd-helper
+[ -e Makefile ] || cat config.log
 
 %make
 %make -C e2fsck
