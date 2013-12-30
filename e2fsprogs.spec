@@ -10,12 +10,12 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.42.8
-Release:	5
+Version:	1.42.9
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
+Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.gz
 Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
@@ -238,6 +238,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_mandir}/man1/lsattr.1*
 %{_mandir}/man5/e2fsck.conf.5*
 %{_mandir}/man5/mke2fs.conf.5*
+%{_mandir}/man5/ext?.5*
 %{_mandir}/man8/badblocks.8*
 %{_mandir}/man8/debugfs.8*
 %{_mandir}/man8/dumpe2fs.8*
