@@ -230,7 +230,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
-%{_libexecdir}/e2initrd_helper
+%{_libdir}/e2initrd_helper
 
 %{_bindir}/chattr
 %{_bindir}/lsattr
