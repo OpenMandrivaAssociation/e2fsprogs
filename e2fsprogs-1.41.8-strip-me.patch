@@ -1,36 +1,5 @@
---- e2fsprogs-1.42.9/lib/et/Makefile.in.0005~	2013-12-29 05:18:02.000000000 +0100
-+++ e2fsprogs-1.42.9/lib/et/Makefile.in	2013-12-30 12:05:33.879960876 +0100
-@@ -66,6 +66,10 @@ INFO=@MAKEINFO@
- HTML=makeinfo --html --no-split
- PS2PDF=ps2pdf
- 
-+compile_et.install: compile_et
-+	@perl -ne '/^# BUILD start/ ... /^# BUILD end/ or print' $< > $@
-+	@$(CHMOD) +x $@
-+
- com_err.ps : com_err.dvi
- com_err.dvi: com_err.texinfo
- 
-@@ -107,7 +111,7 @@ installdirs::
- 		$(DESTDIR)$(bindir) $(DESTDIR)$(man1dir) \
- 		$(DESTDIR)$(man3dir) $(DESTDIR)$(libdir)/pkgconfig
- 
--install:: compile_et libcom_err.a $(HFILES) installdirs com_err.pc
-+install:: compile_et libcom_err.a $(HFILES) installdirs com_err.pc compile_et.install
- 	$(E) "	INSTALL_DATA $(libdir)/libcom_err.a"
- 	$(Q) $(INSTALL_DATA) libcom_err.a $(DESTDIR)$(libdir)/libcom_err.a
- 	-$(Q) $(RANLIB) $(DESTDIR)$(libdir)/libcom_err.a
-@@ -123,7 +127,7 @@ install:: compile_et libcom_err.a $(HFIL
- 		$(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(datadir)/et/$$i; \
- 	done
- 	$(E) "	INSTALL_SCRIPT $(bindir)/compile_et"
--	$(Q) $(INSTALL_SCRIPT) compile_et $(DESTDIR)$(bindir)/compile_et
-+	$(Q) $(INSTALL_SCRIPT) compile_et.install $(DESTDIR)$(bindir)/compile_et
- 	$(E) "	INSTALL_DATA $(man3dir)/com_err.3"
- 	$(Q) $(INSTALL_DATA) $(srcdir)/com_err.3 $(DESTDIR)$(man3dir)/com_err.3
- 	$(E) "	INSTALL_DATA $(man1dir)/compile_et.1"
---- e2fsprogs-1.42.9/lib/et/compile_et.sh.in.0005~	2009-08-13 03:39:57.000000000 +0200
-+++ e2fsprogs-1.42.9/lib/et/compile_et.sh.in	2013-12-30 10:35:00.379889569 +0100
+--- e2fsprogs-1.42.12/lib/et/compile_et.sh.in.0005~	2011-01-14 19:07:50.000000000 +0100
++++ e2fsprogs-1.42.12/lib/et/compile_et.sh.in	2014-08-30 14:41:05.377351012 +0200
 @@ -5,12 +5,14 @@
  datarootdir=@datarootdir@
  AWK=@AWK@
@@ -63,9 +32,40 @@
  fi
  
  ROOT=`echo $1 | sed -e s/.et$//`
---- e2fsprogs-1.42.9/lib/ss/Makefile.in.0005~	2013-10-13 04:26:00.000000000 +0200
-+++ e2fsprogs-1.42.9/lib/ss/Makefile.in	2013-12-30 10:35:00.379889569 +0100
-@@ -120,6 +120,10 @@ mk_cmds: $(DEP_SUBSTITUTE) $(srcdir)/mk_
+--- e2fsprogs-1.42.12/lib/et/Makefile.in.0005~	2014-08-02 22:26:22.000000000 +0200
++++ e2fsprogs-1.42.12/lib/et/Makefile.in	2014-08-30 23:38:57.044899648 +0200
+@@ -64,6 +64,10 @@ INFO=@MAKEINFO@
+ HTML=makeinfo --html --no-split
+ PS2PDF=ps2pdf
+ 
++compile_et.install: compile_et
++	@perl -ne '/^# BUILD start/ ... /^# BUILD end/ or print' $< > $@
++	@$(CHMOD) +x $@
++
+ com_err.ps : com_err.dvi
+ com_err.dvi: com_err.texinfo
+ 
+@@ -105,7 +109,7 @@ installdirs::
+ 		$(DESTDIR)$(bindir) $(DESTDIR)$(man1dir) \
+ 		$(DESTDIR)$(man3dir) $(DESTDIR)$(pkgconfigdir)
+ 
+-install:: compile_et libcom_err.a $(HFILES) installdirs com_err.pc
++install:: compile_et libcom_err.a $(HFILES) installdirs com_err.pc compile_et.install
+ 	$(E) "	INSTALL_DATA $(libdir)/libcom_err.a"
+ 	$(Q) $(INSTALL_DATA) libcom_err.a $(DESTDIR)$(libdir)/libcom_err.a
+ 	-$(Q) $(RANLIB) $(DESTDIR)$(libdir)/libcom_err.a
+@@ -121,7 +125,7 @@ install:: compile_et libcom_err.a $(HFIL
+ 		$(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(datadir)/et/$$i; \
+ 	done
+ 	$(E) "	INSTALL_SCRIPT $(bindir)/compile_et"
+-	$(Q) $(INSTALL_SCRIPT) compile_et $(DESTDIR)$(bindir)/compile_et
++	$(Q) $(INSTALL_SCRIPT) compile_et.install $(DESTDIR)$(bindir)/compile_et
+ 	$(E) "	INSTALL_DATA $(man3dir)/com_err.3"
+ 	$(Q) $(INSTALL_DATA) $(srcdir)/com_err.3 $(DESTDIR)$(man3dir)/com_err.3
+ 	$(E) "	INSTALL_DATA $(man1dir)/compile_et.1"
+--- e2fsprogs-1.42.12/lib/ss/Makefile.in.0005~	2014-08-02 22:26:22.000000000 +0200
++++ e2fsprogs-1.42.12/lib/ss/Makefile.in	2014-08-30 23:39:42.065336815 +0200
+@@ -118,6 +118,10 @@ mk_cmds: $(DEP_SUBSTITUTE) $(srcdir)/mk_
  	$(Q) $(SUBSTITUTE) $(srcdir)/mk_cmds.sh.in mk_cmds
  	$(Q) $(CHMOD) +x mk_cmds
  
@@ -76,16 +76,16 @@
  ss.pc: $(srcdir)/ss.pc.in $(top_builddir)/config.status
  	$(E) "	CONFIG.STATUS $@"
  	$(Q) cd $(top_builddir); CONFIG_FILES=lib/ss/ss.pc ./config.status
-@@ -130,7 +134,7 @@ installdirs::
+@@ -128,7 +132,7 @@ installdirs::
  		$(DESTDIR)$(includedir)/ss $(DESTDIR)$(datadir)/ss \
- 		$(DESTDIR)$(bindir) $(DESTDIR)$(libdir)/pkgconfig
+ 		$(DESTDIR)$(bindir) $(DESTDIR)$(pkgconfigdir)
  
 -install:: libss.a $(INSTALL_HFILES) installdirs ss_err.h mk_cmds ss.pc
 +install:: libss.a $(INSTALL_HFILES) installdirs ss_err.h mk_cmds ss.pc mk_cmds.install
  	$(E) "	INSTALL_DATA $(DESTDIR)$(libdir)/libss.a"
  	$(Q) $(INSTALL_DATA) libss.a $(DESTDIR)$(libdir)/libss.a
  	-$(Q) $(RANLIB) $(DESTDIR)$(libdir)/libss.a
-@@ -147,7 +151,7 @@ install:: libss.a $(INSTALL_HFILES) inst
+@@ -145,7 +149,7 @@ install:: libss.a $(INSTALL_HFILES) inst
  		$(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(datadir)/ss/$$i; \
  	done
  	$(E) "	INSTALL $(bindir)/mk_cmds"
@@ -93,9 +93,9 @@
 +	$(Q) $(INSTALL) mk_cmds.install $(DESTDIR)$(bindir)/mk_cmds
  	$(E) "	INSTALL_DATA $(man1dir)/mk_cmds.1"
  	$(Q) $(INSTALL_DATA) $(srcdir)/mk_cmds.1 $(DESTDIR)$(man1dir)/mk_cmds.1
- 	$(E) "	INSTALL_DATA $(libdir)/pkgconfig/ss.pc"
---- e2fsprogs-1.42.9/lib/ss/mk_cmds.sh.in.0005~	2009-08-13 03:39:57.000000000 +0200
-+++ e2fsprogs-1.42.9/lib/ss/mk_cmds.sh.in	2013-12-30 10:35:00.379889569 +0100
+ 	$(E) "	INSTALL_DATA $(pkgconfigdir)/ss.pc"
+--- e2fsprogs-1.42.12/lib/ss/mk_cmds.sh.in.0005~	2011-01-14 19:07:50.000000000 +0100
++++ e2fsprogs-1.42.12/lib/ss/mk_cmds.sh.in	2014-08-30 14:41:05.378350999 +0200
 @@ -4,7 +4,9 @@
  
  datarootdir=@datarootdir@
