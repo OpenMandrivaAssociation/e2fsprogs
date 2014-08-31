@@ -326,7 +326,6 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_libdir}/libext2fs.a
 %{_libdir}/libext2fs.so
 %{_libdir}/libcom_err.a
-%{_libdir}/libquota.a
 %{_libdir}/libss.a
 %{_libdir}/libss.so
 
@@ -337,7 +336,6 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{uclibc_root}%{_libdir}/libext2fs.a
 %{uclibc_root}%{_libdir}/libext2fs.so
 %{uclibc_root}%{_libdir}/libcom_err.a
-%{uclibc_root}%{_libdir}/libquota.a
 %{uclibc_root}%{_libdir}/libss.a
 %{uclibc_root}%{_libdir}/libss.so
 %endif
@@ -349,8 +347,6 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_includedir}/ext2fs
 %dir %{multiarch_includedir}/ext2fs
 %{multiarch_includedir}/ext2fs/ext2_types.h
-%dir %{_includedir}/quota
-%{_includedir}/quota/mkquota.h
 %{_includedir}/ss
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
