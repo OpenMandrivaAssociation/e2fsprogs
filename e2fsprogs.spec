@@ -25,6 +25,7 @@ Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
+Patch7:		e2fsprogs-git-fix-memory-leak.patch
 
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
