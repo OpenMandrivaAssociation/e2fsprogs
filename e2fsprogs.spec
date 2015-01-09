@@ -23,6 +23,7 @@ Patch0:		e2fsprogs-1.41.8-uninitialized.patch
 Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
+Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
