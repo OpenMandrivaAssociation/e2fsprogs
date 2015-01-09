@@ -17,6 +17,7 @@ Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
 Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.gz
 Source1:	e3jsize
+Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
@@ -207,6 +208,9 @@ chmod u+w -R %{buildroot}
 # This should be owned by glibc, not util-linux
 rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 
+# Let boot continue even if *gasp* clock is wrong
+install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
+
 %files -f %{name}.lang
 %doc README
 %{_root_sbindir}/badblocks
@@ -232,6 +236,8 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
+%config(noreplace) %{_sysconfdir}/e2fsck.conf
+
 %{_libdir}/e2initrd_helper
 
 %{_bindir}/chattr
