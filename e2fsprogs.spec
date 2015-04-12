@@ -1,17 +1,17 @@
-%define	_root_sbindir	/sbin
-%define	_root_libdir	/%{_lib}
-%define	major	2
+%define _root_sbindir /sbin
+%define _root_libdir /%{_lib}
+%define major 2
 %define libname %mklibname ext2fs %{major}
-%define	devname	%mklibname ext2fs -d
+%define devname %mklibname ext2fs -d
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-%bcond_without	uclibc
+%bcond_without uclibc
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.42.12
-Release:	3
+Release:	5
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -25,8 +25,10 @@ Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
-Patch7:		e2fsprogs-git-fix-memory-leak.patch
-
+Patch7:		0001-tune2fs-fix-memory-leak-in-inode_scan_and_fix.patch
+Patch8:		0002-Fix-clang-warning-and-a-resource-leak.patch
+Patch9:		0003-libext2fs-fix-tdb.c-mmap-leak.patch
+Patch10:	0004-libext2fs-fix-potential-buffer-overflow-in-closefs.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
@@ -47,7 +49,8 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
-%package -n	uclibc-%{name}
+%if %{with uclibc}
+%package -n uclibc-%{name}
 Summary:	Utilities used for ext2/ext3/ext4 filesystems (uClibc linked)
 Group:		System/Kernel and hardware
 
@@ -62,8 +65,9 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
+%endif
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	The libraries for Ext2fs
 Group:		System/Libraries
 Conflicts:	%{_lib}ext2fs2 < 1.42.6-5
@@ -82,7 +86,8 @@ utilities.
 
 This package contains the shared libraries.
 
-%package -n	uclibc-%{libname}
+%if %{with uclibc}
+%package -n uclibc-%{libname}
 Summary:	The libraries for Ext2fs (uClibc linked)
 Group:		System/Libraries
 
@@ -97,8 +102,9 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
+%endif
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
@@ -158,7 +164,7 @@ popd
 
 mkdir -p system
 pushd system
-%configure2_5x \
+%configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
 	--disable-libuuid \
@@ -359,4 +365,3 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
 %{_mandir}/man3/com_err.3*
-

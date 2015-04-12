@@ -1,7 +1,7 @@
 From 5da8912008bbcfcaef3c8109831fdb4af40cd4fd Mon Sep 17 00:00:00 2001
 From: Xiaoguang Wang <wangxg.fnst@cn.fujitsu.com>
 Date: Tue, 2 Dec 2014 21:06:40 -0500
-Subject: tune2fs: fix memory leak in inode_scan_and_fix()
+Subject: [PATCH] tune2fs: fix memory leak in inode_scan_and_fix()
 
 When we use ext2fs_open_inode_scan() to iterate inodes and finish
 jobs, we also need a ext2fs_close_inode_scan(scan) operation, but in
@@ -10,6 +10,9 @@ inode_scan_and_fix(), we forgot to call it, fix this error.
 Signed-off-by: Xiaoguang Wang <wangxg.fnst@cn.fujitsu.com>
 Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+---
+ misc/tune2fs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/misc/tune2fs.c b/misc/tune2fs.c
 index fe2c8ae..61078cc 100644
@@ -24,5 +27,5 @@ index fe2c8ae..61078cc 100644
  	return retval;
  }
 -- 
-cgit v0.10.2
+1.9.0
 
