@@ -5,7 +5,7 @@
  AWK=@AWK@
  DIR="${DIR-@datadir@/et}"
 +# BUILD start
- ET_DIR="@ET_DIR@"
+ ET_DIR="${ET_DIR-@ET_DIR@}"
  
  if test "$1" = "--build-tree" ; then
      shift;

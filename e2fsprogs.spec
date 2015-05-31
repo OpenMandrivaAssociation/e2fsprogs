@@ -10,12 +10,12 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.42.12
-Release:	5
+Version:	1.42.13
+Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
-Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.gz
+Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.xz
 Source1:	e3jsize
 Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
@@ -25,10 +25,6 @@ Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
-Patch7:		0001-tune2fs-fix-memory-leak-in-inode_scan_and_fix.patch
-Patch8:		0002-Fix-clang-warning-and-a-resource-leak.patch
-Patch9:		0003-libext2fs-fix-tdb.c-mmap-leak.patch
-Patch10:	0004-libext2fs-fix-potential-buffer-overflow-in-closefs.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
