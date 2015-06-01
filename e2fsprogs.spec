@@ -1,28 +1,30 @@
-%define	_root_sbindir	/sbin
-%define	_root_libdir	/%{_lib}
-%define	major	2
+%define _root_sbindir /sbin
+%define _root_libdir /%{_lib}
+%define major 2
 %define libname %mklibname ext2fs %{major}
-%define	devname	%mklibname ext2fs -d
+%define devname %mklibname ext2fs -d
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-%bcond_without	uclibc
+%bcond_without uclibc
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.42.8
-Release:	2
+Version:	1.42.13
+Release:	0.1
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
+Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.xz
 Source1:	e3jsize
+Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
+Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
-
+Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
@@ -43,7 +45,8 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
-%package -n	uclibc-%{name}
+%if %{with uclibc}
+%package -n uclibc-%{name}
 Summary:	Utilities used for ext2/ext3/ext4 filesystems (uClibc linked)
 Group:		System/Kernel and hardware
 
@@ -58,8 +61,9 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
+%endif
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	The libraries for Ext2fs
 Group:		System/Libraries
 Conflicts:	%{_lib}ext2fs2 < 1.42.6-5
@@ -78,7 +82,8 @@ utilities.
 
 This package contains the shared libraries.
 
-%package -n	uclibc-%{libname}
+%if %{with uclibc}
+%package -n uclibc-%{libname}
 Summary:	The libraries for Ext2fs (uClibc linked)
 Group:		System/Libraries
 
@@ -93,8 +98,9 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
+%endif
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
@@ -154,7 +160,7 @@ popd
 
 mkdir -p system
 pushd system
-%configure2_5x \
+%configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
 	--disable-libuuid \
@@ -205,6 +211,9 @@ chmod u+w -R %{buildroot}
 # This should be owned by glibc, not util-linux
 rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 
+# Let boot continue even if *gasp* clock is wrong
+install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
+
 %files -f %{name}.lang
 %doc README
 %{_root_sbindir}/badblocks
@@ -230,6 +239,8 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
+%config(noreplace) %{_sysconfdir}/e2fsck.conf
+
 %{_libdir}/e2initrd_helper
 
 %{_bindir}/chattr
@@ -238,6 +249,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_mandir}/man1/lsattr.1*
 %{_mandir}/man5/e2fsck.conf.5*
 %{_mandir}/man5/mke2fs.conf.5*
+%{_mandir}/man5/ext?.5*
 %{_mandir}/man8/badblocks.8*
 %{_mandir}/man8/debugfs.8*
 %{_mandir}/man8/dumpe2fs.8*
@@ -324,7 +336,6 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_libdir}/libext2fs.a
 %{_libdir}/libext2fs.so
 %{_libdir}/libcom_err.a
-%{_libdir}/libquota.a
 %{_libdir}/libss.a
 %{_libdir}/libss.so
 
@@ -335,7 +346,6 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{uclibc_root}%{_libdir}/libext2fs.a
 %{uclibc_root}%{_libdir}/libext2fs.so
 %{uclibc_root}%{_libdir}/libcom_err.a
-%{uclibc_root}%{_libdir}/libquota.a
 %{uclibc_root}%{_libdir}/libss.a
 %{uclibc_root}%{_libdir}/libss.so
 %endif
@@ -347,10 +357,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_includedir}/ext2fs
 %dir %{multiarch_includedir}/ext2fs
 %{multiarch_includedir}/ext2fs/ext2_types.h
-%dir %{_includedir}/quota
-%{_includedir}/quota/mkquota.h
 %{_includedir}/ss
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
 %{_mandir}/man3/com_err.3*
-
