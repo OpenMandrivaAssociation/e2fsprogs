@@ -238,6 +238,7 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 
 %files -f %{name}.lang
 %doc README
+%{_sysconfdir}/mke2fs.conf.e2fsprogs-new
 %{_root_sbindir}/badblocks
 %{_root_sbindir}/debugfs
 %{_root_sbindir}/dumpe2fs
