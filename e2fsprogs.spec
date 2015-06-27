@@ -11,7 +11,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.42.13
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -30,6 +30,8 @@ BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-16
+BuildRequires:	uclibc-libblkid-devel
+BuildRequires:	uclibc-libuuid-devel
 %endif
 Conflicts:	e2fsprogs < 1.42.6-4
 
@@ -98,15 +100,35 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
+
+%package -n uclibc-%{devname}
+Summary:	The libraries for Ext2fs
+Group:		Development/C
+Requires:	uclibc-%{libname} = %{EVRD}
+Requires:	%{devname} = %{EVRD}
+Provides:	uclibc-ext2fs-devel = %{EVRD}
+Conflicts:	%{devname} < 1.42.13-2
+
+%description -n	uclibc-%{devname}
+The e2fsprogs package contains a number of utilities for creating,
+checking, modifying and correcting any inconsistencies in ext2, ext3,
+and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
+filesystem inconsistencies after an unclean shutdown), mke2fs (used to
+initialize a partition to contain an empty ext2 filesystem), debugfs
+(used to examine the internal structure of a filesystem, to manually
+repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
+(used to modify filesystem parameters), resize2fs to grow and shrink
+unmounted filesystems, and most of the other core ext2fs filesystem
+utilities.
+
+You should install %{libname} to use tools that compile with ext2fs
+features.
 %endif
 
 %package -n %{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{EVRD}
-%endif
 Provides:	ext2fs-devel = %{EVRD}
 
 %description -n	%{devname}
@@ -319,27 +341,8 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{uclibc_root}/%{_lib}/libe2p.so.%{major}*
 %{uclibc_root}/%{_lib}/libext2fs.so.%{major}*
 %{uclibc_root}/%{_lib}/libss.so.%{major}*
-%endif
 
-%files -n %{devname}
-%doc RELEASE-NOTES
-%{_infodir}/libext2fs.info*
-%{_bindir}/compile_et
-%{_mandir}/man1/compile_et.1*
-%{_bindir}/mk_cmds
-%{_mandir}/man1/mk_cmds.1*
-%{_libdir}/pkgconfig/*
-
-%{_libdir}/libcom_err.so
-%{_libdir}/libe2p.a
-%{_libdir}/libe2p.so
-%{_libdir}/libext2fs.a
-%{_libdir}/libext2fs.so
-%{_libdir}/libcom_err.a
-%{_libdir}/libss.a
-%{_libdir}/libss.so
-
-%if %{with uclibc}
+%files -n uclibc-%{devname}
 %{uclibc_root}%{_libdir}/libcom_err.so
 %{uclibc_root}%{_libdir}/libe2p.a
 %{uclibc_root}%{_libdir}/libe2p.so
@@ -350,6 +353,22 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{uclibc_root}%{_libdir}/libss.so
 %endif
 
+%files -n %{devname}
+%doc RELEASE-NOTES
+%{_infodir}/libext2fs.info*
+%{_bindir}/compile_et
+%{_mandir}/man1/compile_et.1*
+%{_bindir}/mk_cmds
+%{_mandir}/man1/mk_cmds.1*
+%{_libdir}/pkgconfig/*
+%{_libdir}/libcom_err.so
+%{_libdir}/libe2p.a
+%{_libdir}/libe2p.so
+%{_libdir}/libext2fs.a
+%{_libdir}/libext2fs.so
+%{_libdir}/libcom_err.a
+%{_libdir}/libss.a
+%{_libdir}/libss.so
 %{_datadir}/et
 %{_datadir}/ss
 %{_includedir}/com_err.h
