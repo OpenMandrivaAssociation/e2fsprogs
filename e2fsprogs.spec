@@ -6,7 +6,7 @@
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-%bcond_without uclibc
+%bcond_with uclibc
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
@@ -238,7 +238,7 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 
 %files -f %{name}.lang
 %doc README
-%{_sysconfdir}/mke2fs.conf.e2fsprogs-new
+%{_sysconfdir}/mke2fs.conf
 %{_root_sbindir}/badblocks
 %{_root_sbindir}/debugfs
 %{_root_sbindir}/dumpe2fs
