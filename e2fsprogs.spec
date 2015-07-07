@@ -6,7 +6,7 @@
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-%bcond_with uclibc
+%bcond_without uclibc
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
