@@ -100,7 +100,8 @@ chmod 644 po/*.po
 	--disable-libuuid \
 	--disable-fsck \
 	--disable-uuidd \
-	--enable-symlink-install
+	--enable-symlink-install \
+	--disable-e2initrd-helper
 %make
 %make -C e2fsck e2fsck.static
 
