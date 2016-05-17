@@ -1,4 +1,2 @@
-removed_sources:
-  e2fsprogs-1.42.12.tar.gz: 083c1bb0d1e85672e8038a2fadf70b24e7409db7
 sources:
-  e2fsprogs-1.42.13.tar.xz: 2d008b9902a169bd6767058ba98fce334328c763
+  e2fsprogs-1.43.tar.xz: 8f3f5814fb31935922782dd3c75c38e0651519f9
