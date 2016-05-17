@@ -107,7 +107,7 @@ chmod 644 po/*.po
 
 
 #%check
-#LC_ALL=C make -C system check -k || /bin/true
+#LC_ALL=C make -C check -k || /bin/true
 
 %install
 export PATH=/sbin:$PATH
@@ -121,7 +121,7 @@ export PATH=/sbin:$PATH
 
 chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
 
-install -m 755 system/e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
+install -m 755 e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
 ln -f %{buildroot}%{_root_sbindir}/mke2fs %{buildroot}%{_root_sbindir}/mke3fs
 
