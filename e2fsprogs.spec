@@ -6,8 +6,6 @@
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
-%bcond_with uclibc
-
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.43
@@ -21,18 +19,12 @@ Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
-Patch1:		e2fsprogs-1.42.12-uClibc-buildfix.patch
 # (gb) strip references to home build dir
 Patch5:		e2fsprogs-1.41.8-strip-me.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
-%if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-16
-BuildRequires:	uclibc-libblkid-devel
-BuildRequires:	uclibc-libuuid-devel
-%endif
 Conflicts:	e2fsprogs < 1.42.6-4
 
 %description
@@ -46,24 +38,6 @@ repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
 (used to modify filesystem parameters), resize2fs to grow and shrink
 unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
-
-%if %{with uclibc}
-%package -n uclibc-%{name}
-Summary:	Utilities used for ext2/ext3/ext4 filesystems (uClibc linked)
-Group:		System/Kernel and hardware
-
-%description -n	uclibc-%{name}
-The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in ext2, ext3,
-and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
-filesystem inconsistencies after an unclean shutdown), mke2fs (used to
-initialize a partition to contain an empty ext2 filesystem), debugfs
-(used to examine the internal structure of a filesystem, to manually
-repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters), resize2fs to grow and shrink
-unmounted filesystems, and most of the other core ext2fs filesystem
-utilities.
-%endif
 
 %package -n %{libname}
 Summary:	The libraries for Ext2fs
@@ -83,47 +57,6 @@ unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
 This package contains the shared libraries.
-
-%if %{with uclibc}
-%package -n uclibc-%{libname}
-Summary:	The libraries for Ext2fs (uClibc linked)
-Group:		System/Libraries
-
-%description -n uclibc-%{libname}
-The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in ext2, ext3,
-and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
-filesystem inconsistencies after an unclean shutdown), mke2fs (used to
-initialize a partition to contain an empty ext2 filesystem), debugfs
-(used to examine the internal structure of a filesystem, to manually
-repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters), resize2fs to grow and shrink
-unmounted filesystems, and most of the other core ext2fs filesystem
-utilities.
-
-%package -n uclibc-%{devname}
-Summary:	The libraries for Ext2fs
-Group:		Development/C
-Requires:	uclibc-%{libname} = %{EVRD}
-Requires:	%{devname} = %{EVRD}
-Provides:	uclibc-ext2fs-devel = %{EVRD}
-Conflicts:	%{devname} < 1.42.13-2
-
-%description -n	uclibc-%{devname}
-The e2fsprogs package contains a number of utilities for creating,
-checking, modifying and correcting any inconsistencies in ext2, ext3,
-and ext4 filesystems.  E2fsprogs contains e2fsck (used to repair
-filesystem inconsistencies after an unclean shutdown), mke2fs (used to
-initialize a partition to contain an empty ext2 filesystem), debugfs
-(used to examine the internal structure of a filesystem, to manually
-repair a corrupted filesystem or to create test cases for e2fsck), tune2fs
-(used to modify filesystem parameters), resize2fs to grow and shrink
-unmounted filesystems, and most of the other core ext2fs filesystem
-utilities.
-
-You should install %{libname} to use tools that compile with ext2fs
-features.
-%endif
 
 %package -n %{devname}
 Summary:	The libraries for Ext2fs
@@ -157,31 +90,10 @@ autoconf
 chmod 644 po/*.po
 
 %build
-export CONFIGURE_TOP="$PWD"
-
 %ifarch %{ix86}
 %global ldflags %{ldflags} -fuse-ld=bfd
 %endif
-%if %{with uclibc}
-mkdir -p uclibc
-pushd uclibc
-%uclibc_configure \
-	--enable-elf-shlibs \
-	--disable-libblkid \
-	--disable-libuuid \
-	--disable-fsck \
-	--disable-uuidd \
-	--enable-symlink-install \
-	--disable-e2initrd-helper
-[ -e Makefile ] || cat config.log
 
-%make
-%make -C e2fsck
-popd
-%endif
-
-mkdir -p system
-pushd system
 %configure \
 	--enable-elf-shlibs \
 	--disable-libblkid \
@@ -191,7 +103,7 @@ pushd system
 	--enable-symlink-install
 %make
 %make -C e2fsck e2fsck.static
-popd
+
 
 #%check
 #LC_ALL=C make -C system check -k || /bin/true
@@ -199,21 +111,7 @@ popd
 %install
 export PATH=/sbin:$PATH
 
-%if %{with uclibc}
-%makeinstall_std -C \
-	uclibc install-libs \
-	root_sbindir=%{uclibc_root}/sbin \
-	root_libdir=%{uclibc_root}/%{_lib}
-rm -r %{buildroot}%{uclibc_root}%{_libdir}/pkgconfig
-for bin in chattr compile_et lsattr mk_cmds; do
-	rm %{buildroot}%{uclibc_root}%{_bindir}/$bin
-done
-%endif
-
-%makeinstall_std -C \
-	system install-libs \
-	root_sbindir=%{_root_sbindir} \
-	root_libdir=%{_root_libdir}
+%makeinstall_std install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
 # multiarch policy, alternative is to use <stdint.h>
 %multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
@@ -224,8 +122,7 @@ chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
 
 install -m 755 system/e2fsck/e2fsck.static %{buildroot}%{_root_sbindir}
 install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
-ln -f %{buildroot}%{_root_sbindir}/mke2fs \
-	%{buildroot}%{_root_sbindir}/mke3fs
+ln -f %{buildroot}%{_root_sbindir}/mke2fs %{buildroot}%{_root_sbindir}/mke3fs
 
 # fix some files not having write permission by user
 chmod u+w -R %{buildroot}
@@ -262,9 +159,7 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
 %config(noreplace) %{_sysconfdir}/e2fsck.conf
-
 %{_libdir}/e2initrd_helper
-
 %{_bindir}/chattr
 %{_bindir}/lsattr
 %{_mandir}/man1/chattr.1*
@@ -300,58 +195,12 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
 
-%if %{with uclibc}
-%files -n uclibc-%{name}
-%{uclibc_root}/sbin/badblocks
-%{uclibc_root}/sbin/debugfs
-%{uclibc_root}/sbin/dumpe2fs
-%{uclibc_root}/sbin/e2fsck
-%{uclibc_root}/sbin/e2image
-%{uclibc_root}/sbin/e2label
-%{uclibc_root}/sbin/e2undo
-%{uclibc_root}/sbin/fsck.ext2
-%{uclibc_root}/sbin/fsck.ext3
-%{uclibc_root}/sbin/fsck.ext4
-%{uclibc_root}/sbin/fsck.ext4dev
-%{uclibc_root}/sbin/logsave
-%{uclibc_root}/sbin/mke2fs
-%{uclibc_root}/sbin/mkfs.ext2
-%{uclibc_root}/sbin/mkfs.ext3
-%{uclibc_root}/sbin/mkfs.ext4
-%{uclibc_root}/sbin/mkfs.ext4dev
-%{uclibc_root}/sbin/resize2fs
-%{uclibc_root}/sbin/tune2fs
-%{uclibc_root}%{_sbindir}/e2freefrag
-%{uclibc_root}%{_sbindir}/e4defrag
-%{uclibc_root}%{_sbindir}/filefrag
-%{uclibc_root}%{_sbindir}/mklost+found
-%endif
-
 %files -n %{libname}
 %doc README
 %{_root_libdir}/libcom_err.so.%{major}*
 %{_root_libdir}/libe2p.so.%{major}*
 %{_root_libdir}/libext2fs.so.%{major}*
 %{_root_libdir}/libss.so.%{major}*
-
-%if %{with uclibc}
-%files -n uclibc-%{libname}
-%doc README
-%{uclibc_root}/%{_lib}/libcom_err.so.%{major}*
-%{uclibc_root}/%{_lib}/libe2p.so.%{major}*
-%{uclibc_root}/%{_lib}/libext2fs.so.%{major}*
-%{uclibc_root}/%{_lib}/libss.so.%{major}*
-
-%files -n uclibc-%{devname}
-%{uclibc_root}%{_libdir}/libcom_err.so
-%{uclibc_root}%{_libdir}/libe2p.a
-%{uclibc_root}%{_libdir}/libe2p.so
-%{uclibc_root}%{_libdir}/libext2fs.a
-%{uclibc_root}%{_libdir}/libext2fs.so
-%{uclibc_root}%{_libdir}/libcom_err.a
-%{uclibc_root}%{_libdir}/libss.a
-%{uclibc_root}%{_libdir}/libss.so
-%endif
 
 %files -n %{devname}
 %doc RELEASE-NOTES
