@@ -160,11 +160,11 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
 %config(noreplace) %{_sysconfdir}/e2fsck.conf
-%{_libdir}/e2initrd_helper
 %{_bindir}/chattr
 %{_bindir}/lsattr
 %{_mandir}/man1/chattr.1*
 %{_mandir}/man1/lsattr.1*
+%{_mandir}/man1/fuse2fs.1*
 %{_mandir}/man5/e2fsck.conf.5*
 %{_mandir}/man5/mke2fs.conf.5*
 %{_mandir}/man5/ext?.5*
@@ -191,10 +191,12 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_mandir}/man8/mklost+found.8*
 %{_mandir}/man8/resize2fs.8*
 %{_mandir}/man8/tune2fs.8*
+%{_mandir}/man8/e4crypt.8*
 %{_sbindir}/e2freefrag
 %{_sbindir}/e4defrag
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
+%{_sbindir}/e4crypt
 
 %files -n %{libname}
 %doc README
