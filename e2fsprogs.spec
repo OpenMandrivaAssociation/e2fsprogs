@@ -25,6 +25,7 @@ Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
+BuildRequires:	pkgconfig(fuse)
 Conflicts:	e2fsprogs < 1.42.6-4
 
 %description
@@ -102,7 +103,8 @@ chmod 644 po/*.po
 	--disable-uuidd \
 	--enable-symlink-install \
 	--disable-e2initrd-helper
-%make
+
+%make -j1
 %make -C e2fsck e2fsck.static
 
 
@@ -197,6 +199,7 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
 %{_sbindir}/e4crypt
+%{_sbindir}/fuse2fs
 
 %files -n %{libname}
 %doc README
