@@ -8,12 +8,12 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.43
+Version:	1.43.1
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
-Source0:	http://garr.dl.sourceforge.net/project/e2fsprogs/e2fsprogs/v%{version}/%{name}-%{version}.tar.xz
+Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
 Source1:	e3jsize
 Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
