@@ -19,8 +19,6 @@ Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
-# (gb) strip references to home build dir
-Patch5:		e2fsprogs-1.41.8-strip-me.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
@@ -150,14 +148,12 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_root_sbindir}/fsck.ext2
 %{_root_sbindir}/fsck.ext3
 %{_root_sbindir}/fsck.ext4
-%{_root_sbindir}/fsck.ext4dev
 %{_root_sbindir}/logsave
 %{_root_sbindir}/mke2fs
 %{_root_sbindir}/mke3fs
 %{_root_sbindir}/mkfs.ext2
 %{_root_sbindir}/mkfs.ext3
 %{_root_sbindir}/mkfs.ext4
-%{_root_sbindir}/mkfs.ext4dev
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
@@ -183,13 +179,11 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_mandir}/man8/fsck.ext2.8*
 %{_mandir}/man8/fsck.ext3.8*
 %{_mandir}/man8/fsck.ext4.8.*
-%{_mandir}/man8/fsck.ext4dev.8.*
 %{_mandir}/man8/logsave.8*
 %{_mandir}/man8/mke2fs.8*
 %{_mandir}/man8/mkfs.ext2.8*
 %{_mandir}/man8/mkfs.ext3.8*
 %{_mandir}/man8/mkfs.ext4.8.*
-%{_mandir}/man8/mkfs.ext4dev.8.*
 %{_mandir}/man8/mklost+found.8*
 %{_mandir}/man8/resize2fs.8*
 %{_mandir}/man8/tune2fs.8*
