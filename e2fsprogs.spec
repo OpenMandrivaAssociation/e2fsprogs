@@ -9,7 +9,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.43.4
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -113,9 +113,6 @@ chmod 644 po/*.po
 export PATH=/sbin:$PATH
 
 %makeinstall_std install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
-
-# multiarch policy, alternative is to use <stdint.h>
-%multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
 
 %find_lang %{name}
 
@@ -222,8 +219,6 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_includedir}/com_err.h
 %{_includedir}/et
 %{_includedir}/ext2fs
-%dir %{multiarch_includedir}/ext2fs
-%{multiarch_includedir}/ext2fs/ext2_types.h
 %{_includedir}/ss
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
