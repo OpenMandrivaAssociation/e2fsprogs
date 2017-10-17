@@ -114,6 +114,11 @@ export PATH=/sbin:$PATH
 
 %makeinstall_std install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
+%if %{mdvver} <= 3000000
+# multiarch policy, alternative is to use <stdint.h>
+%multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
+%endif
+
 %find_lang %{name}
 
 chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
@@ -219,6 +224,10 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_includedir}/com_err.h
 %{_includedir}/et
 %{_includedir}/ext2fs
+%if %{mdvver} <= 3000000
+%dir %{multiarch_includedir}/ext2fs
+%{multiarch_includedir}/ext2fs/ext2_types.h
+%endif
 %{_includedir}/ss
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
