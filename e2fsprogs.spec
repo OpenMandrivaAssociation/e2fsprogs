@@ -9,7 +9,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.43.7
-Release:	2
+Release:	3
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -19,11 +19,12 @@ Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
+Patch1:		e2fsprogs-1.43.7-fuse3.patch
 Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
-BuildRequires:	pkgconfig(fuse)
+BuildRequires:	pkgconfig(fuse3)
 Conflicts:	e2fsprogs < 1.42.6-4
 
 %description
@@ -92,6 +93,7 @@ chmod 644 po/*.po
 %ifarch %{ix86}
 %global ldflags %{ldflags} -fuse-ld=bfd
 %endif
+%global optflags %{optflags} -I%{_includedir}/fuse3
 
 %configure \
 	--enable-elf-shlibs \
