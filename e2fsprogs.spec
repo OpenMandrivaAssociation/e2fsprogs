@@ -200,6 +200,9 @@ chmod u+w -R %{buildroot}
 # This should be owned by glibc, not util-linux
 rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 
+# remove static libraries with a shared counterpart
+rm %{buildroot}%{_libdir}/lib{com_err,e2p,ext2fs,ss}.a
+
 %files -f %{name}.lang
 %doc README
 %{_root_sbindir}/badblocks
