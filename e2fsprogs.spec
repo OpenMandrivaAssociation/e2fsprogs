@@ -3,10 +3,10 @@
 %define major 2
 %define libname %mklibname ext2fs %{major}
 %define devname %mklibname ext2fs -d
-%define libcom_err %mklibane com_err %{major}
-%define devcom_err %mklibane com_err -d
-%define libss %mklibane ss %{major}
-%define devss %mklibane ss -d
+%define libcom_err %mklibname com_err %{major}
+%define devcom_err %mklibname com_err -d
+%define libss %mklibname ss %{major}
+%define devss %mklibname ss -d
 
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
@@ -69,6 +69,7 @@ unmounted filesystems, and most of the other core ext2fs filesystem
 utilities.
 
 This package contains the shared libraries.
+
 %package -n %{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
