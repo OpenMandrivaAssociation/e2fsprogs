@@ -8,21 +8,19 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.44.1
+Version:	1.44.2
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
 Source1:	e3jsize
-Source2:	e2fsck.conf
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
 %if %{mdvver} > 3000000
 Patch1:		e2fsprogs-1.43.7-fuse3.patch
 %endif
-Patch6:		e2fsprogs-1.40.4-sb_feature_check_ignore.patch
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
@@ -144,9 +142,6 @@ chmod u+w -R %{buildroot}
 # This should be owned by glibc, not util-linux
 rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 
-# Let boot continue even if *gasp* clock is wrong
-install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
-
 %files -f %{name}.lang
 %doc README
 %{_root_sbindir}/badblocks
@@ -170,7 +165,6 @@ install -p -m 644 %{SOURCE2} %{buildroot}/etc/e2fsck.conf
 %{_root_sbindir}/resize2fs
 %{_root_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
-%config(noreplace) %{_sysconfdir}/e2fsck.conf
 %{_bindir}/chattr
 %{_bindir}/lsattr
 %{_mandir}/man1/chattr.1*
