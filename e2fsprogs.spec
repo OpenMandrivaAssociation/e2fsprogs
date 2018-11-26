@@ -8,7 +8,7 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.44.2
+Version:	1.44.4
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -151,6 +151,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_root_sbindir}/e2fsck.static
 %{_root_sbindir}/e2image
 %{_root_sbindir}/e2label
+%{_root_sbindir}/e2mmpstatus
 %{_root_sbindir}/e2undo
 %{_root_sbindir}/e3jsize
 %{_root_sbindir}/fsck.ext2
@@ -180,6 +181,7 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 %{_mandir}/man8/e2fsck.8*
 %{_mandir}/man8/e2image.8*
 %{_mandir}/man8/e2label.8*
+%{_mandir}/man8/e2mmpstatus.8*
 %{_mandir}/man8/e2undo.8.*
 %{_mandir}/man8/e4defrag.8.*
 %{_mandir}/man8/filefrag.8*
