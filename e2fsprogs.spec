@@ -12,7 +12,7 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.44.6
+Version:	1.45.0
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -205,6 +205,13 @@ rm %{buildroot}%{_libdir}/lib{com_err,e2p,ext2fs,ss}.a
 
 %files -f %{name}.lang
 %doc README
+%{_sysconfdir}/cron.d/e2scrub_all
+%{_sysconfdir}/e2scrub.conf
+/lib/systemd/system/e2scrub*
+/lib/udev/rules.d/96-e2scrub.rules
+%{_root_sbindir}/e2scrub
+%{_root_sbindir}/e2scrub_all
+%{_libdir}/e2fsprogs
 %{_root_sbindir}/badblocks
 %{_root_sbindir}/debugfs
 %{_root_sbindir}/dumpe2fs
@@ -243,6 +250,7 @@ rm %{buildroot}%{_libdir}/lib{com_err,e2p,ext2fs,ss}.a
 %{_mandir}/man8/e2label.8*
 %{_mandir}/man8/e2mmpstatus.8*
 %{_mandir}/man8/e2undo.8.*
+%{_mandir}/man8/e2scrub*.*
 %{_mandir}/man8/e4defrag.8.*
 %{_mandir}/man8/filefrag.8*
 %{_mandir}/man8/fsck.ext2.8*
