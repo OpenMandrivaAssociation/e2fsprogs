@@ -33,6 +33,8 @@ BuildRequires:	pkgconfig(fuse)
 %else
 BuildRequires:	pkgconfig(fuse3)
 %endif
+BuildRequires:	pkgconfig(systemd)
+BuildRequires:	pkgconfig(udev)
 Conflicts:	e2fsprogs < 1.42.6-4
 Requires:	%{libname} = %{EVRD}
 Requires:	%{libcom_err} = %{EVRD}
