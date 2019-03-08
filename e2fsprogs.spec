@@ -205,9 +205,11 @@ rm -rf %{buildroot}%{_datadir}/locale/locale.alias
 # remove static libraries with a shared counterpart
 rm %{buildroot}%{_libdir}/lib{com_err,e2p,ext2fs,ss}.a
 
+# We don't need the cron job, use a systemd timer if necessary
+rm -rf %{buildroot}%{_sysconfdir}/cron.d
+
 %files -f %{name}.lang
 %doc README
-%{_sysconfdir}/cron.d/e2scrub_all
 %{_sysconfdir}/e2scrub.conf
 /lib/systemd/system/e2scrub*
 /lib/udev/rules.d/96-e2scrub.rules
