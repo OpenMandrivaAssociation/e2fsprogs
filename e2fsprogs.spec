@@ -12,7 +12,7 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.45.0
+Version:	1.45.1
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -146,8 +146,7 @@ parses a command table to generate a simple command-line interface parser.
 It was originally inspired by the Multics SubSystem library.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 rm -f configure
 autoconf
@@ -174,7 +173,7 @@ chmod 644 po/*.po
 	--enable-symlink-install \
 	--disable-e2initrd-helper
 
-%make -j1
+%make_build -j1
 
 #%check
 #LC_ALL=C make -C check -k || /bin/true
@@ -182,7 +181,7 @@ chmod 644 po/*.po
 %install
 export PATH=/sbin:$PATH
 
-%makeinstall_std install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
+%make_install install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
 
 %if %{mdvver} <= 3000000
 # multiarch policy, alternative is to use <stdint.h>
