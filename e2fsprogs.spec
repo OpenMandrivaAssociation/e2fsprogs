@@ -12,7 +12,7 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.45.2
+Version:	1.45.3
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
@@ -273,7 +273,7 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_sbindir}/filefrag
 %{_sbindir}/mklost+found
 %{_sbindir}/e4crypt
-%{_sbindir}/fuse2fs
+%{_bindir}/fuse2fs
 
 %files -n %{libname}
 %{_root_libdir}/libe2p.so.%{major}*
