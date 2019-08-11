@@ -75,6 +75,7 @@ This package contains the shared libraries.
 %package -n %{devname}
 Summary:	The libraries for Ext2fs
 Group:		Development/C
+Provides:	%{name}-devel = %{EVRD}
 Requires:	%{libname} = %{EVRD}
 Requires:	%{devcom_err} = %{EVRD}
 Provides:	ext2fs-devel = %{EVRD}
