@@ -7,13 +7,13 @@
 %define devcom_err %mklibname com_err -d
 %define libss %mklibname ss %{major}
 %define devss %mklibname ss -d
-
+%define optflags %{optflags} -Oz
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.45.4
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
