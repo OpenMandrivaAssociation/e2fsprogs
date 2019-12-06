@@ -7,7 +7,6 @@
 %define devcom_err %mklibname com_err -d
 %define libss %mklibname ss %{major}
 %define devss %mklibname ss -d
-%define optflags %{optflags} -Oz
 %define git_url git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
@@ -161,7 +160,7 @@ chmod 644 po/*.po
 %endif
 
 %if %{mdvver} > 3000000
-%global optflags %{optflags} -I%{_includedir}/fuse3
+%global optflags %{optflags} -Oz -I%{_includedir}/fuse3
 %endif
 
 %configure \
