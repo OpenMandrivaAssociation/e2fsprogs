@@ -251,7 +251,9 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_mandir}/man8/e2image.8*
 %{_mandir}/man8/e2label.8*
 %{_mandir}/man8/e2mmpstatus.8*
+%{_mandir}/man8/e2undo.8.*
 %{_mandir}/man8/e2scrub*.*
+%{_mandir}/man8/e4defrag.8.*
 %{_mandir}/man8/filefrag.8*
 %{_mandir}/man8/fsck.ext2.8*
 %{_mandir}/man8/fsck.ext3.8*
