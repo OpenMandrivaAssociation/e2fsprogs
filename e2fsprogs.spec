@@ -12,7 +12,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.45.5
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -21,17 +21,11 @@ Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
-%if %{mdvver} > 3000000
 Patch1:		e2fsprogs-1.43.7-fuse3.patch
-%endif
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
-%if %{mdvver} <= 3000000
-BuildRequires:	pkgconfig(fuse)
-%else
 BuildRequires:	pkgconfig(fuse3)
-%endif
 BuildRequires:	pkgconfig(systemd)
 BuildRequires:	pkgconfig(udev)
 Conflicts:	e2fsprogs < 1.42.6-4
@@ -159,9 +153,7 @@ chmod 644 po/*.po
 %global ldflags %{ldflags} -fuse-ld=bfd
 %endif
 
-%if %{mdvver} > 3000000
 %global optflags %{optflags} -Oz -I%{_includedir}/fuse3
-%endif
 
 %configure \
 	--enable-elf-shlibs \
@@ -181,11 +173,6 @@ chmod 644 po/*.po
 export PATH=/sbin:$PATH
 
 %make_install install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
-
-%if %{mdvver} <= 3000000
-# multiarch policy, alternative is to use <stdint.h>
-%multiarch_includes %{buildroot}%{_includedir}/ext2fs/ext2_types.h
-%endif
 
 %find_lang %{name}
 
@@ -310,9 +297,5 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_libdir}/libe2p.so
 %{_libdir}/libext2fs.so
 %{_includedir}/ext2fs
-%if %{mdvver} <= 3000000
-%dir %{multiarch_includedir}/ext2fs
-%{multiarch_includedir}/ext2fs/ext2_types.h
-%endif
 %dir %{_includedir}/e2p
 %{_includedir}/e2p/e2p.h
