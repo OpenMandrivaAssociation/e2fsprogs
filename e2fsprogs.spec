@@ -25,7 +25,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.46.2
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -39,7 +39,7 @@ BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
 BuildRequires:	pkgconfig(fuse3)
-BuildRequires:	pkgconfig(systemd)
+BuildRequires:	systemd-macros
 BuildRequires:	pkgconfig(udev)
 Conflicts:	e2fsprogs < 1.42.6-4
 Requires:	%{libname} = %{EVRD}
@@ -273,7 +273,8 @@ cd build32
 	--disable-fsck \
 	--disable-uuidd \
 	--enable-symlink-install \
-	--disable-e2initrd-helper
+	--disable-e2initrd-helper \
+	--with-systemd-unit-dir=%{_systemd_util_dir}
 cd ..
 %make_build -j1 -C build32
 %endif
@@ -287,7 +288,8 @@ cd build
 	--disable-fsck \
 	--disable-uuidd \
 	--enable-symlink-install \
-	--disable-e2initrd-helper
+	--disable-e2initrd-helper \
+	--with-systemd-unit-dir=%{_systemd_util_dir}
 cd ..
 
 %make_build -j1 -C build
