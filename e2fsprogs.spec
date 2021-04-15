@@ -274,7 +274,7 @@ cd build32
 	--disable-uuidd \
 	--enable-symlink-install \
 	--disable-e2initrd-helper \
-	--with-systemd-unit-dir=%{_systemd_util_dir}
+	--with-systemd-unit-dir=%{_unitdir}
 cd ..
 %make_build -j1 -C build32
 %endif
@@ -289,7 +289,7 @@ cd build
 	--disable-uuidd \
 	--enable-symlink-install \
 	--disable-e2initrd-helper \
-	--with-systemd-unit-dir=%{_systemd_util_dir}
+	--with-systemd-unit-dir=%{_unitdir}
 cd ..
 
 %make_build -j1 -C build
