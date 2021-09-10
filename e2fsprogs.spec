@@ -329,8 +329,8 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %files -f %{name}.lang
 %doc README
 %{_sysconfdir}/e2scrub.conf
-/lib/systemd/system/e2scrub*
-/lib/udev/rules.d/96-e2scrub.rules
+%{_unitdir}/e2scrub*
+%{_udevrulesdir}/96-e2scrub.rules
 %{_root_sbindir}/e2scrub
 %{_root_sbindir}/e2scrub_all
 %{_libdir}/e2fsprogs
@@ -357,36 +357,36 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
 %{_bindir}/chattr
 %{_bindir}/lsattr
-%{_mandir}/man1/chattr.1*
-%{_mandir}/man1/lsattr.1*
-%{_mandir}/man1/fuse2fs.1*
-%{_mandir}/man5/e2fsck.conf.5*
-%{_mandir}/man5/mke2fs.conf.5*
-%{_mandir}/man5/ext?.5*
-%{_mandir}/man8/badblocks.8*
-%{_mandir}/man8/debugfs.8*
-%{_mandir}/man8/dumpe2fs.8*
-%{_mandir}/man8/e2freefrag.8*
-%{_mandir}/man8/e2fsck.8*
-%{_mandir}/man8/e2image.8*
-%{_mandir}/man8/e2label.8*
-%{_mandir}/man8/e2mmpstatus.8*
-%{_mandir}/man8/e2undo.8.*
-%{_mandir}/man8/e2scrub*.*
-%{_mandir}/man8/e4defrag.8.*
-%{_mandir}/man8/filefrag.8*
-%{_mandir}/man8/fsck.ext2.8*
-%{_mandir}/man8/fsck.ext3.8*
-%{_mandir}/man8/fsck.ext4.8.*
-%{_mandir}/man8/logsave.8*
-%{_mandir}/man8/mke2fs.8*
-%{_mandir}/man8/mkfs.ext2.8*
-%{_mandir}/man8/mkfs.ext3.8*
-%{_mandir}/man8/mkfs.ext4.8.*
-%{_mandir}/man8/mklost+found.8*
-%{_mandir}/man8/resize2fs.8*
-%{_mandir}/man8/tune2fs.8*
-%{_mandir}/man8/e4crypt.8*
+%doc %{_mandir}/man1/chattr.1*
+%doc %{_mandir}/man1/lsattr.1*
+%doc %{_mandir}/man1/fuse2fs.1*
+%doc %{_mandir}/man5/e2fsck.conf.5*
+%doc %{_mandir}/man5/mke2fs.conf.5*
+%doc %{_mandir}/man5/ext?.5*
+%doc %{_mandir}/man8/badblocks.8*
+%doc %{_mandir}/man8/debugfs.8*
+%doc %{_mandir}/man8/dumpe2fs.8*
+%doc %{_mandir}/man8/e2freefrag.8*
+%doc %{_mandir}/man8/e2fsck.8*
+%doc %{_mandir}/man8/e2image.8*
+%doc %{_mandir}/man8/e2label.8*
+%doc %{_mandir}/man8/e2mmpstatus.8*
+%doc %{_mandir}/man8/e2undo.8.*
+%doc %{_mandir}/man8/e2scrub*.*
+%doc %{_mandir}/man8/e4defrag.8.*
+%doc %{_mandir}/man8/filefrag.8*
+%doc %{_mandir}/man8/fsck.ext2.8*
+%doc %{_mandir}/man8/fsck.ext3.8*
+%doc %{_mandir}/man8/fsck.ext4.8.*
+%doc %{_mandir}/man8/logsave.8*
+%doc %{_mandir}/man8/mke2fs.8*
+%doc %{_mandir}/man8/mkfs.ext2.8*
+%doc %{_mandir}/man8/mkfs.ext3.8*
+%doc %{_mandir}/man8/mkfs.ext4.8.*
+%doc %{_mandir}/man8/mklost+found.8*
+%doc %{_mandir}/man8/resize2fs.8*
+%doc %{_mandir}/man8/tune2fs.8*
+%doc %{_mandir}/man8/e4crypt.8*
 %{_sbindir}/e2freefrag
 %{_sbindir}/e4defrag
 %{_sbindir}/filefrag
@@ -407,8 +407,8 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_datadir}/et
 %{_includedir}/et
 %{_includedir}/com_err.h
-%{_mandir}/man1/compile_et.1*
-%{_mandir}/man3/com_err.3*
+%doc %{_mandir}/man1/compile_et.1*
+%doc %{_mandir}/man3/com_err.3*
 %{_libdir}/pkgconfig/com_err.pc
 
 %files -n %{libss}
@@ -419,12 +419,12 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_libdir}/libss.so
 %{_datadir}/ss
 %{_includedir}/ss
-%{_mandir}/man1/mk_cmds.1*
+%doc %{_mandir}/man1/mk_cmds.1*
 %{_libdir}/pkgconfig/ss.pc
 
 %files -n %{devname}
 %doc RELEASE-NOTES
-%{_infodir}/libext2fs.info*
+%doc %{_infodir}/libext2fs.info*
 %{_libdir}/pkgconfig/e2p.pc
 %{_libdir}/pkgconfig/ext2fs.pc
 %{_libdir}/libe2p.so
