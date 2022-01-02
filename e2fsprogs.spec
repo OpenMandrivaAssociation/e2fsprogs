@@ -24,7 +24,7 @@
 
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
-Version:	1.46.4
+Version:	1.46.5
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
