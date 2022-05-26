@@ -1,5 +1,3 @@
-%define _root_sbindir /sbin
-%define _root_libdir /%{_lib}
 %define major 2
 %define libname %mklibname ext2fs %{major}
 %define devname %mklibname ext2fs -d
@@ -25,7 +23,7 @@
 Summary:	Utilities used for ext2/ext3/ext4 filesystems
 Name:		e2fsprogs
 Version:	1.46.5
-Release:	1
+Release:	2
 License:	GPLv2
 Group:		System/Kernel and hardware
 Url:		http://e2fsprogs.sourceforge.net/
@@ -257,7 +255,7 @@ chmod 644 po/*.po
 
 %build
 %ifarch %{ix86}
-%global ldflags %{ldflags} -fuse-ld=bfd
+%global buil_ldflags %{build_ldflags} -fuse-ld=bfd
 %endif
 
 %global optflags %{optflags} -Oz -I%{_includedir}/fuse3
@@ -301,18 +299,17 @@ cd ..
 export PATH=/sbin:$PATH
 
 %if %{with compat32}
-%make_install -C build32 install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_prefix}/lib
-rm -rf %{buildroot}%{_prefix}/lib/lib{com_err,e2p,ext2fs,ss}.a \
-	%{buildroot}%{_prefix}/lib/e2fsprogs
+%make_install -C build32 install-libs root_sbindir=%{_sbindir} root_libdir=%{_prefix}/lib
+rm -rf %{buildroot}%{_prefix}/lib/lib{com_err,e2p,ext2fs,ss}.a %{buildroot}%{_prefix}/lib/e2fsprogs %{buildroot}%{_sbindir}/*
 %endif
-%make_install -C build install-libs root_sbindir=%{_root_sbindir} root_libdir=%{_root_libdir}
+%make_install -C build install-libs root_sbindir=%{_sbindir} root_libdir=%{_libdir}
 
 %find_lang %{name}
 
 chmod +x %{buildroot}%{_bindir}/{mk_cmds,compile_et}
 
-install -m 755 %{SOURCE1} %{buildroot}%{_root_sbindir}
-ln -f %{buildroot}%{_root_sbindir}/mke2fs %{buildroot}%{_root_sbindir}/mke3fs
+install -m 755 %{SOURCE1} %{buildroot}%{_sbindir}
+ln -f %{buildroot}%{_sbindir}/mke2fs %{buildroot}%{_sbindir}/mke3fs
 
 # fix some files not having write permission by user
 chmod u+w -R %{buildroot}
@@ -331,29 +328,29 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_sysconfdir}/e2scrub.conf
 %{_unitdir}/e2scrub*
 %{_udevrulesdir}/96-e2scrub.rules
-%{_root_sbindir}/e2scrub
-%{_root_sbindir}/e2scrub_all
+%{_sbindir}/e2scrub
+%{_sbindir}/e2scrub_all
 %{_libdir}/e2fsprogs
-%{_root_sbindir}/badblocks
-%{_root_sbindir}/debugfs
-%{_root_sbindir}/dumpe2fs
-%{_root_sbindir}/e2fsck
-%{_root_sbindir}/e2image
-%{_root_sbindir}/e2label
-%{_root_sbindir}/e2mmpstatus
-%{_root_sbindir}/e2undo
-%{_root_sbindir}/e3jsize
-%{_root_sbindir}/fsck.ext2
-%{_root_sbindir}/fsck.ext3
-%{_root_sbindir}/fsck.ext4
-%{_root_sbindir}/logsave
-%{_root_sbindir}/mke2fs
-%{_root_sbindir}/mke3fs
-%{_root_sbindir}/mkfs.ext2
-%{_root_sbindir}/mkfs.ext3
-%{_root_sbindir}/mkfs.ext4
-%{_root_sbindir}/resize2fs
-%{_root_sbindir}/tune2fs
+%{_sbindir}/badblocks
+%{_sbindir}/debugfs
+%{_sbindir}/dumpe2fs
+%{_sbindir}/e2fsck
+%{_sbindir}/e2image
+%{_sbindir}/e2label
+%{_sbindir}/e2mmpstatus
+%{_sbindir}/e2undo
+%{_sbindir}/e3jsize
+%{_sbindir}/fsck.ext2
+%{_sbindir}/fsck.ext3
+%{_sbindir}/fsck.ext4
+%{_sbindir}/logsave
+%{_sbindir}/mke2fs
+%{_sbindir}/mke3fs
+%{_sbindir}/mkfs.ext2
+%{_sbindir}/mkfs.ext3
+%{_sbindir}/mkfs.ext4
+%{_sbindir}/resize2fs
+%{_sbindir}/tune2fs
 %config(noreplace) %{_sysconfdir}/mke2fs.conf
 %{_bindir}/chattr
 %{_bindir}/lsattr
@@ -395,11 +392,11 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_bindir}/fuse2fs
 
 %files -n %{libname}
-%{_root_libdir}/libe2p.so.%{major}*
-%{_root_libdir}/libext2fs.so.%{major}*
+%{_libdir}/libe2p.so.%{major}*
+%{_libdir}/libext2fs.so.%{major}*
 
 %files -n %{libcom_err}
-%{_root_libdir}/libcom_err.so.%{major}*
+%{_libdir}/libcom_err.so.%{major}*
 
 %files -n %{devcom_err}
 %{_bindir}/compile_et
@@ -412,7 +409,7 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_libdir}/pkgconfig/com_err.pc
 
 %files -n %{libss}
-%{_root_libdir}/libss.so.%{major}*
+%{_libdir}/libss.so.%{major}*
 
 %files -n %{devss}
 %{_bindir}/mk_cmds
