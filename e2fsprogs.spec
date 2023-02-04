@@ -44,6 +44,7 @@ Requires:	%{libname} = %{EVRD}
 Requires:	%{libcom_err} = %{EVRD}
 Requires:	%{libss} = %{EVRD}
 %if %{with compat32}
+BuildRequires:	libc6
 BuildRequires:	devel(libblkid)
 BuildRequires:	devel(libuuid)
 %endif
