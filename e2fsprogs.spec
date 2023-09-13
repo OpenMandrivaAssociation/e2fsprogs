@@ -259,7 +259,11 @@ chmod 644 po/*.po
 %global buil_ldflags %{build_ldflags} -fuse-ld=bfd
 %endif
 
+%if %{cross_compiling}
+%global optflags %{optflags} -Oz -I%{_prefix}/%{_target_platform}/include/fuse3
+%else
 %global optflags %{optflags} -Oz -I%{_includedir}/fuse3
+%endif
 
 export CONFIGURE_TOP="$(pwd)"
 %if %{with compat32}
