@@ -335,7 +335,7 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %{_udevrulesdir}/96-e2scrub.rules
 %{_sbindir}/e2scrub
 %{_sbindir}/e2scrub_all
-%{_libdir}/e2fsprogs
+#{_libdir}/e2fsprogs
 %{_sbindir}/badblocks
 %{_sbindir}/debugfs
 %{_sbindir}/dumpe2fs
