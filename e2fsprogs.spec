@@ -331,10 +331,11 @@ rm -rf %{buildroot}%{_sysconfdir}/cron.d
 %doc README
 %{_sysconfdir}/e2scrub.conf
 %{_unitdir}/e2scrub*
+%{_udevrulesdir}/64-ext4.rules
 %{_udevrulesdir}/96-e2scrub.rules
 %{_sbindir}/e2scrub
 %{_sbindir}/e2scrub_all
-%{_libdir}/e2fsprogs
+%{_libexecdir}/e2fsprogs
 %{_sbindir}/badblocks
 %{_sbindir}/debugfs
 %{_sbindir}/dumpe2fs
