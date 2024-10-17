@@ -26,7 +26,7 @@ Version:	1.47.1
 Release:	1
 License:	GPLv2
 Group:		System/Kernel and hardware
-Url:		http://e2fsprogs.sourceforge.net/
+Url:		https://e2fsprogs.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/e2fsprogs/%{name}-%{version}.tar.gz
 Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
