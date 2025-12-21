@@ -32,6 +32,11 @@ Source1:	e3jsize
 # (anssi) fix uninitialized variable causing crash without libreadline.so.5;
 # submitted as https://sourceforge.net/tracker/?func=detail&aid=2822113&group_id=2406&atid=302406
 Patch0:		e2fsprogs-1.41.8-uninitialized.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	texinfo
 BuildRequires:	pkgconfig(blkid)
 BuildRequires:	pkgconfig(uuid)
